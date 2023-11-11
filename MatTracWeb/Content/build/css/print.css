@@ -1,0 +1,10 @@
+﻿
+   #report-summary {
+
+}
+
+@media print {
+  #search,
+  .printPage {
+    display: none !important;
+  }

@@ -1,0 +1,278 @@
+﻿
+@{
+    ViewBag.Title = "Company";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- page content -->
+<link href="~/styles/kendo.common.min.css" rel="stylesheet" />
+<link href="~/styles/kendo.default.mobile.min.css" rel="stylesheet" />
+<link href="~/styles/kendo.default.min.css" rel="stylesheet">
+<script src="~/js/jquery.min.js"></script>
+<script src="~/js/kendo.all.min.js"></script>
+<script src="~/Scripts/kendo/cultures/kendo.culture.tr-TR.min.js"></script>
+<script src="~/Scripts/kendo/messages/kendo.messages.tr-TR.min.js"></script>
+<link href="~/Content/build/css/jquery-ui.css" rel="stylesheet" />
+<script src="~/Content/build/js/jquery-ui.js"></script>
+<script src="~/Content/build/js/jquery-input-mask-phone-number.min.js"></script>
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>FİRMA LİSTESİ - DÜZENLEME FORMU</h3>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Firma Bilgileri</h2>
+
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <br />
+                        <div class="col-lg-12">
+                            <div class="iq-card">
+                                <div class="iq-card-header d-flex justify-content-between">
+                                    <div class="iq-header-title">
+                                        <h4 class="card-title">Firma Bilgileri</h4>
+                                    </div>
+                                </div>
+                                <div class="iq-card-body">
+                                    <div id="grid"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script id="popup-editor" type="text/x-kendo-template">
+        <div class="k-edit-form-container">
+            <div class="k-edit-label"><label for="CompanyName">Firma Adı</label></div><div data-container-for="CompanyName" class="k-edit-field">
+                <input type="text" id="CompanyName" name="CompanyName" title="Firma Adı" data-bind="value:CompanyName" class="k-textbox">
+            </div>
+            <div class="k-edit-label"><label for="CompanyAdress">Firma Adresi</label></div><div data-container-for="CompanyAdress" class="k-edit-field">
+                <input type="text" id="CompanyAdress" name="CompanyAdress" title="Firma Adresi" data-bind="value:CompanyAdress" class="k-textbox">
+            </div>
+            <div class="k-edit-label"><label for="CompanyCategories">Kategori</label></div><div data-container-for="CompanyCategories" class="k-edit-field">
+                <input type="text" id="CompanyCategories" name="CompanyCategories" title="Kategori" data-bind="value:CompanyCategories" class="k-textbox">
+            </div>
+            <div class="k-edit-label"><label for="CompanyCity">İli</label></div><div data-container-for="CompanyCity" class="k-edit-field">
+                <input type="text" id="CompanyCity" name="CompanyCity" title="İli" data-bind="value:CompanyCity" class="k-textbox">
+            </div>
+            <div class="k-edit-label"><label for="CompanyCounty">İlçesi</label></div><div data-container-for="CompanyCounty" class="k-edit-field">
+                <input type="text" id="CompanyCounty" name="CompanyCounty" title="İlçesi" data-bind="value:CompanyCounty" class="k-textbox">
+            </div>
+            <div class="k-edit-label"><label for="ServiceDescription">Servis Açıklama</label></div><div data-container-for="ServiceDescription" class="k-edit-field">
+                <input type="text" id="ServiceDescription" name="ServiceDescription" title="Servis Açıklama" data-bind="value:ServiceDescription" class="k-textbox">
+            </div>
+            <div class="k-edit-label"><label for="FaxNumber">Fax No</label></div><div data-container-for="FaxNumber" class="k-edit-field">
+                <input type="text" id="FaxNumber" name="FaxNumber" title="Fax No" data-bind="value:FaxNumber" class="k-textbox">
+            </div>
+            <div class="k-edit-label"><label for="LandPhone">Sabit Telefon</label></div><div data-container-for="LandPhone" class="k-edit-field">
+                <input type="text" id="LandPhone" name="LandPhone" title="Sabit Telefo" data-bind="value:LandPhone" class="k-textbox">
+            </div>
+            <div class="k-edit-label"><label for="CellPhone">Cep Telefonu</label></div><div data-container-for="CellPhone" class="k-edit-field">
+                <input type="text" id="CellPhone" name="CellPhone" title="Cep Telefonu" data-bind="value:CellPhone" class="k-textbox">
+            </div>
+        </div>
+    </script>
+    <script>
+        $(document).ready(function () {
+
+            $.ajax({
+                type: "GET",
+                url: "/UserOperation/CompanyList",
+                success: function (data) {
+                    debugger;
+                    document.querySelector('#grid').innerHTML = "";
+                    $("#grid").kendoGrid({
+                        dataSource: {
+                            type: "odata",
+                            data: data,
+                            schema: {
+                                model: {
+                                    id: "CompanyId",
+                                    fields: {
+                                        CompanyId: { type: "string", editable: false },
+                                        CompanyName: { type: "string", editable: true },
+                                        CompanyAdress: { type: "string", editable: true },
+                                        CompanyCategories: { type: "string", editable: true },
+                                        CompanyCity: { type: "string", editable: true },
+                                        CompanyCounty: { type: "string", editable: true },
+                                        ServiceDescription: { type: "string", editable: true },
+                                        FaxNumber: { type: "string", editable: true },
+                                        LandPhone: { type: "string", editable: true },
+                                        CellPhone: { type: "string", editable: true }
+                                    }
+                                },
+                                expanded: true
+                            },
+                            pageSize: 20,
+                            sort: ({
+                                field: "date",
+                                dir: "desc"
+                            })
+
+                        },
+                        noRecords: {
+                            template: "<div class='empty-grid'></div>"
+                        },
+                        pageable: {
+                            alwaysVisible: false
+                        },
+                        editable: {
+                            template: kendo.template($("#popup-editor").html()),
+                            mode: "popup"
+                        },
+
+                        columns: [
+                            {
+                                field: "CompanyName",
+                                title: "Firma Adı",
+                                width: 80
+                            },
+                            {
+                                field: "CompanyAdress",
+                                title: "Firma Adresi",
+                                width: 80
+                            },
+                            {
+                                field: "CompanyCategories",
+                                title: "Kategorisi",
+                                width: 40
+                            },
+                            {
+                                field: "CompanyCity",
+                                title: "Firma İli",
+                                width: 40
+                            },
+                            {
+                                field: "CompanyCounty",
+                                title: "Firma İlçeşi",
+                                width: 40
+                            },
+                            {
+                                field: "ServiceDescription",
+                                title: "Servis Açıklaması",
+                                width: 80
+                            },
+                            {
+                                field: "FaxNumber",
+                                title: "Fax No",
+                                width: 40
+                            },
+                            {
+                                field: "LandPhone",
+                                title: "Sabit Telefon",
+                                width: 40
+                            },
+                            {
+                                field: "CellPhone",
+                                title: "Cep Telefonu",
+                                width: 40
+                            },
+                            {
+                                title: "Düzenle",
+                                command: ["edit"],
+                                width: 40
+                            },
+                            {
+                                field: "Kaydet",
+                                title: "Kaydet",
+                                width: 40,
+                                template: "<button class='btn btn-success pull-left' onclick='CompanySave(\"#:data.CompanyId#\", \"#:data.CompanyName#\", \"#:data.CompanyAdress#\", \"#:data.CompanyCategories#\", \"#:data.CompanyCity#\", \"#:data.CompanyCounty#\", \"#:data.ServiceDescription#\", \"#:data.FaxNumber#\",  \"#:data.LandPhone#\" ,  \"#:data.CellPhone#\"  )'>Kaydet</button>"
+
+                            }
+                        ]
+                    });
+                }
+            });
+        });
+        function CompanySave(CompanyId, CompanyName, CompanyAdress, CompanyCategories, CompanyCity, CompanyCounty, ServiceDescription, FaxNumber, LandPhone, CellPhone) {         
+           
+            var myData = {
+                CompanyId: CompanyId,
+                CompanyName: CompanyName,
+                CompanyAdress: CompanyAdress,
+                CompanyCategories: CompanyCategories,
+                CompanyCity: CompanyCity,
+                CompanyCounty: CompanyCounty,
+                ServiceDescription: ServiceDescription,
+                FaxNumber: FaxNumber,
+                LandPhone: LandPhone,
+                CellPhone: CellPhone
+            };
+            $.ajax({
+                type: "GET",
+                url: "/UserOperation/CompanyUpdateSave",
+                data: myData,
+                success: function (data) {
+
+                    if (data == "1") {
+                        $('<div title="Güncelleme İşlemi"></div>').dialog({
+                            open: function (event, ui) {
+                                $(this).html("Güncelleme Başarılı");
+                            },
+                            close: function () {
+                                $(this).remove();
+                            },
+                            resizable: true,
+                            modal: true,
+                            buttons: {
+                                'Tamam': function () {
+                                    $(this).dialog('close');
+                                    window.location.reload(false);
+                                }
+                            }
+                        });
+                    } else {
+                        $('<div title="Güncelleme İşlemi"></div>').dialog({
+                            open: function (event, ui) {
+                                $(this).html("Güncelleme Başarısız");
+                            },
+                            close: function () {
+                                $(this).remove();
+                            },
+                            resizable: true,
+                            modal: true,
+                            buttons: {
+                                'Tamam': function () {
+                                    $(this).dialog('close');
+                                    window.location.reload(false);
+                                }
+                            }
+                        });
+                    }
+                },
+                error: function (err) {
+                    $('<div title="Hata"></div>').dialog({
+                        open: function (event, ui) {
+                            $(this).html("Hata Oluştu");
+                        },
+                        close: function () {
+                            $(this).remove();
+                        },
+                        resizable: true,
+                        modal: true,
+                        buttons: {
+                            'Tamam': function () {
+                                $(this).dialog('close');
+                                window.location.reload(false);
+                            }
+                        }
+                    });
+                }
+            });
+        };        
+    </script>
+</div>
+
+
+<!-- /page content -->
+
+

@@ -1,0 +1,589 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<link href="~/Content/build/css/jquery-ui.css" rel="stylesheet" />
+<script src="~/Content/jqueryDatatables/js/jquery.min.js"></script>
+<script src="~/Content/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
+<script src="~/Content/build/js/jquery-ui.js"></script>
+
+
+<style>
+    .btn-checkbox {
+        display: none;
+        width: 100%;
+    }
+
+        .btn-checkbox + label {
+            background-color: #fafafa;
+            border: 2px solid #456879;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
+            padding: 35px;
+            left: 1px;
+            border-radius: 10px;
+            display: inline-block;
+            position: relative;
+            font-size: 10px;
+        }
+
+            .btn-checkbox + label:active, .btn-checkbox:checked + label:active {
+                box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1);
+            }
+
+        .btn-checkbox:checked + label {
+            background-color: #e8e8e8;
+            border: 3px solid #adb8c0;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05), inset 15px 10px -12px rgba(255,255,255,0.1);
+            color: #99a1a7;
+        }
+
+            .btn-checkbox:checked + label:after {
+                content: '\2714';
+                font-size: 10px;
+                position: absolute;
+                top: -20px;
+                color: #456879;
+            }
+
+    .big-checkbox + label {
+        padding: 5px 17px;
+    }
+
+    .big-checkbox:checked + label:after {
+        font-size: 35px;
+        left: 2px;
+    }
+
+    .btn-radio {
+        display: none;
+    }
+
+        .btn-radio + label {
+            -webkit-appearance: none;
+            background-color: #fafafa;
+            border: 1px solid #cacece;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
+            padding: 36px;
+            border-radius: 50px;
+            display: inline-block;
+            position: relative;
+        }
+
+        .btn-radio:checked + label:after {
+            content: ' ';
+            width: 12px;
+            height: 12px;
+            border-radius: 50px;
+            position: absolute;
+            top: 3px;
+            background: #99a1a7;
+            box-shadow: inset 0px 0px 10px rgba(0,0,0,0.3);
+            text-shadow: 0px;
+            left: 13px;
+            font-size: 32px;
+        }
+
+        .btn-radio:checked + label {
+            background-color: #e9ecee;
+            color: #99a1a7;
+            border: 1px solid #adb8c0;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05), inset 15px 10px -12px rgba(255,255,255,0.1), inset 0px 0px 10px rgba(0,0,0,0.1);
+        }
+
+            .btn-radio + label:active, .btn-radio:checked + label:active {
+                box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1);
+            }
+
+    .big-radio + label {
+        padding: 6px 49px;
+        font-size: 14px;
+        font-weight: bold;
+        color: red;
+    }
+
+    .big-radio:checked + label:after {
+        font-size: 35px;
+        left: 2px;
+    }
+
+    .dd {
+        display: none;
+    }
+
+        .dd + label {
+            display: none;
+            font-size: 3px;
+        }
+</style>
+<style>
+    .vr {
+        border-left: 5px solid #26B99A;
+        height: 270px;
+        position: absolute;
+        left: 50%;
+        margin-left: -3px;
+        top: 25px;
+    }
+</style>
+
+<!-- page content -->
+<div class="right_col">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Yeni Servis Kayıt Formu</h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <br />
+                        <div class="col-md-3 col-sm-3">
+                            <div class="">
+                                <ul class="to_do">
+                                    <li>
+                                        <p>
+
+                                            <div style="position: relative;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Müşteri Adı Soyadı
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <p>
+                                            <div style="position: relative;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Müşteri Cep Telefonu
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <p>
+                                            <div style="position: relative;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Müşteri E-Posta Adresi
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <p>
+                                            <div style="position: relative;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Müşteri Adresi
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <p>
+                                            <div style="position: relative;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Müşteri Vergi No
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <p>
+                                            <div style="position: relative;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Vergi Dairesi
+                                        </p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-3">
+                            <div class="">
+                                <ul class="to_do">
+                                    <li>
+                                        <p>
+                                            <div style="position: relative;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> @ViewBag.services.CustomerName @ViewBag.services.CustomerSurname
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <p>
+                                            <div style="position: relative;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> @ViewBag.services.CustomerPhone
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <p>
+                                            <div style="position: relative;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> @ViewBag.services.CustomerEmail
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <p>
+                                            <div style="position: relative;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> @ViewBag.services.CustomerAddress
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <p>
+                                            <div style="position: relative;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> @ViewBag.services.VergiNo
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <p>
+                                            <div style="position: relative;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> @ViewBag.services.VergiDairesi
+                                        </p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="vr"></div>
+                        <div class="col-md-3 col-sm-3">
+                            <div class="">
+                                <ul class="to_do">
+                                    <li>
+                                        <p>
+                                            <div style="position: relative;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Araç Marka
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <p>
+                                            <div style="position: relative;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Araç Model
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <p>
+                                            <div style="position: relative;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Araç Model Yılı
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <p>
+                                            <div style="position: relative;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Araç Kilometresi
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <p>
+                                            <div style="position: relative;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Araç Plakası
+                                        </p>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-3">
+                            <div class="">
+                                <ul class="to_do">
+                                    <li>
+                                        <p>
+                                            <div style="position: relative;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> @ViewBag.services.Marka
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <p>
+                                            <div style="position: relative;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> @ViewBag.services.Model
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <p>
+                                            <div style="position: relative;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> @ViewBag.services.ModelYear
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <p>
+                                            <div style="position: relative;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> @ViewBag.services.Kilometer
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <p>
+                                            <div style="position: relative;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> @ViewBag.services.Plaka
+
+                                        </p>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="x_panel">
+                    <div class="x_content">
+                        <form class="form-horizontal form-label-left" name="chcForms">
+                            <div class="form-group">
+                                <div class="col-md-3 col-sm-3">
+                                    <div class="">
+                                        <ul class="to_do" id="firstCollapse1"></ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <div class="col-md-3 col-sm-3">
+                                    <div class="">
+                                        <ul class="to_do" id="firstCollapse2"></ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="control-group row">
+                                <div class="col-md-12 col-sm-12">
+                                    <div class="control-group row">
+                                        <h2 class="control-label col-md-12 col-sm-12 ">Şikayet Ekle (Şikayet ekle tıklayıp şikayeti yazın ve Enter'a basın)</h2>
+                                    </div>
+                                    <input id="tags_1" type="text" class="tags form-control" />
+                                    <div id="suggestions-container" style="position: relative; float: left; width: 250px; margin: 10px;"></div>
+                                </div>
+                            </div>
+                            <div class="ln_solid"></div>
+                            <div class="form-group">
+                                <div style="float:right">
+                                    <button type="reset" class="btn btn-primary">Temizle</button>
+                                    <button type="button" id="btnKaydet" class="btn btn-success">Kaydet</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /page content -->
+<input type="hidden" value="@ViewBag.services.CustomerCarsId" id="customerCarId" />
+<input type="hidden" value="@ViewBag.services.CustomerId" id="customerId" />
+
+
+
+
+
+
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            type: "GET",
+            url: "/Services/GetServicesPartPrice",
+            success: function (data) {
+                const remainder = data.length % 2;
+                const numberofOne = Math.floor((remainder == 1 ? data.length / 2 + 1 : data.length / 2));
+                const numberofTwo = data.length - numberofOne;
+                document.querySelector('#firstCollapse1').innerHTML = "";
+                document.querySelector('#firstCollapse2').innerHTML = "";
+                let htmlfirst = "";
+                let htmlSecond = "";
+                $.each(data, function (index, item) {
+                    if (index <= (numberofOne - 1)) {
+                        htmlfirst += ` <li>
+                                        <p>
+                                            <input type="checkbox" id="${item.IdName}" name="${item.IslemAdi}" class ="btn-checkbox big-radio"  /><label for="${item.IdName}" style="width: 100%">${item.IslemAdi}</label>
+                                       </p>
+                                   </li>`;
+
+                    }
+                    if (index >= numberofOne) {
+                        htmlSecond += `<li>
+                                        <p>
+                                            <input type="checkbox" id="${item.IdName}"  name="${item.IslemAdi}" class ="btn-checkbox big-radio"  /><label for="${item.IdName}" style="width: 100%">${item.IslemAdi}</label>
+                                       </p>
+                                   </li>`;
+
+                    }
+
+                });
+                document.querySelector('#firstCollapse1').innerHTML = htmlfirst;
+                document.querySelector('#firstCollapse2').innerHTML = htmlSecond;
+
+            }
+        });
+    });
+
+    function uuidv4() {
+        return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
+            (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+        );
+    }
+
+    $("#btnKaydet").click(function (e) {
+        e.preventDefault();
+        
+        var jsonObj = {};
+        var custRequest = [];
+        var custResponce = [];
+        var formelements = document.forms["chcForms"].elements;
+        for (var i = 0, element; element = formelements[i]; i++) {
+            if (element.type == "checkbox" && element.checked) {
+                var cusRes = {}
+                cusRes.id = element.id;
+                cusRes.name = element.name;
+                custResponce.push(cusRes);
+            }
+        }
+
+        var tags_1 = $("#tags_1").val();
+        var res = tags_1.split(",");
+        for (var i = 0; i < res.length; i++) {
+            if (res[i] != "") {
+                var cusRequest = {}
+                cusRequest.id = uuidv4();
+                cusRequest.name = res[i];
+                custRequest.push(cusRequest);
+            }
+            
+        }
+
+        jsonObj.CustomerResponce = custResponce;
+        jsonObj.CustomerRequest = custRequest;
+
+        var jsonReqResponce = JSON.stringify(jsonObj);
+
+        if (custResponce.length == 0 && custRequest.length == 0)
+        {
+            $('<div title="Uyarı"></div>').dialog({
+                open: function (event, ui) {
+                    $(this).html("En Az Bir Alanı Seçmelisiniz !!!");
+                },
+                close: function () {
+                    $(this).remove();
+                },
+                resizable: true,
+                modal: true,
+                buttons: {
+                    'Tamam': function () {
+                        $(this).dialog('close');
+                    }
+                }
+            });
+        }
+        else {
+            var CustomerId = $("#customerId").val();
+            var CustomerCarsId = $("#customerCarId").val();
+            var myData = {                
+                tags_1: jsonReqResponce,
+                CustomerId: CustomerId,
+                CustomerCarsId: CustomerCarsId
+            };
+            $.ajax({
+                type: "GET",
+                url: "/Services/CustomerDemandSave",
+                data: myData,
+                success: function (data) {
+                    debugger;
+                    if (data == "1") {
+                        $('<div title="Uyarı"></div>').dialog({
+                            open: function (event, ui) {
+                                $(this).html("Kaydetme İşlemi Başarılı Bir Şekilde Yapıldı.");
+                            },
+                            close: function () {
+                                $(this).remove();
+                            },
+                            resizable: true,
+                            modal: true,
+                            buttons: {
+                                'Tamam': function () {
+                                    $(this).dialog('close');
+                                    window.location.reload(false);
+                                }
+                            }
+                        });
+                    }
+                    else {
+                        $('<div title="Uyarı"></div>').dialog({
+                            open: function (event, ui) {
+                                $(this).html("Kaydetme İşlemi Başarısız.");
+                            },
+                            close: function () {
+                                $(this).remove();
+                            },
+                            resizable: true,
+                            modal: true,
+                            buttons: {
+                                'Tamam': function () {
+                                    $(this).dialog('close');
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+        }
+
+
+
+
+
+        //var yagdegisimi = document.getElementById('yagdegisimi').checked;
+        //var yagfilitre = document.getElementById('yagfilitre').checked;
+        //var havafilitre = document.getElementById('havafilitre').checked;
+        //var yakitfilitre = document.getElementById('yakitfilitre').checked;
+        //var polenfilitre = document.getElementById('polenfilitre').checked;
+
+        //var onbin = document.getElementById('onbin').checked;
+        //var yirmibin = document.getElementById('yirmibin').checked;
+        //var ellibin = document.getElementById('ellibin').checked;
+        //var yuzbin = document.getElementById('yuzbin').checked;
+        //var karterconta = document.getElementById('karterconta').checked;
+        //var tags_1 = $("#tags_1").val();
+        //var CustomerCarsId = $("#customerCarId").val();
+        //var CustomerId = $("#customerId").val();
+
+        //if (yagdegisimi == false && yagfilitre == false && havafilitre == false && yakitfilitre == false && polenfilitre == false && onbin == false &&
+        //    yirmibin == false && ellibin == false && yuzbin == false && karterconta == false && tags_1 == "") {
+        //    $('<div title="Uyarı"></div>').dialog({
+        //        open: function (event, ui) {
+        //            $(this).html("En Az Bir Alanı Seçmelisiniz !!!");
+        //        },
+        //        close: function () {
+        //            $(this).remove();
+        //        },
+        //        resizable: true,
+        //        modal: true,
+        //        buttons: {
+        //            'Tamam': function () {
+        //                $(this).dialog('close');
+        //            }
+        //        }
+        //    });
+
+        //}
+        //else {
+        //    var myData = {
+        //        yagdegisimi: yagdegisimi,
+        //        yagfilitre: yagfilitre,
+        //        havafilitre: havafilitre,
+        //        yakitfilitre: yakitfilitre,
+        //        polenfilitre: polenfilitre,
+        //        onbin: onbin,
+        //        yirmibin: yirmibin,
+        //        ellibin: ellibin,
+        //        yuzbin: yuzbin,
+        //        karterconta: karterconta,
+        //        tags_1: tags_1,
+        //        CustomerId: CustomerId,
+        //        CustomerCarsId: CustomerCarsId
+        //    };
+        //    $.ajax({
+        //        type: "GET",
+        //        url: "/Services/CustomerDemandSave",
+        //        data: myData,
+        //        success: function (data) {
+        //            debugger;
+        //            if (data == "1") {
+        //                $('<div title="Uyarı"></div>').dialog({
+        //                    open: function (event, ui) {
+        //                        $(this).html("Kaydetme İşlemi Başarılı Bir Şekilde Yapıldı.");
+        //                    },
+        //                    close: function () {
+        //                        $(this).remove();
+        //                    },
+        //                    resizable: true,
+        //                    modal: true,
+        //                    buttons: {
+        //                        'Tamam': function () {
+        //                            $(this).dialog('close');
+        //                            window.location.reload(false);
+        //                        }
+        //                    }
+        //                });
+        //            }
+        //            else {
+        //                $('<div title="Uyarı"></div>').dialog({
+        //                    open: function (event, ui) {
+        //                        $(this).html("Kaydetme İşlemi Başarısız.");
+        //                    },
+        //                    close: function () {
+        //                        $(this).remove();
+        //                    },
+        //                    resizable: true,
+        //                    modal: true,
+        //                    buttons: {
+        //                        'Tamam': function () {
+        //                            $(this).dialog('close');
+        //                        }
+        //                    }
+        //                });
+        //            }
+        //        }
+        //    });
+        //}
+    });
+</script>
+
+

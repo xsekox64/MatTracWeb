@@ -1,0 +1,223 @@
+﻿
+@{
+    Layout = null;
+}
+
+@model MatTracWeb.ViewModels.LoginUserControl
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MatTracWeb! | </title>
+    <link href="~/Content/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/Content/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <link href="~/Content/vendors/animate.css/animate.min.css" rel="stylesheet">
+    <link href="~/Content/build/css/custom.min.css" rel="stylesheet" />
+    <script src="~/Content/vendors/jquery/dist/jquery.min.js"></script>
+    <script src="~/Content/build/js/jquery-input-mask-phone-number.js"></script>
+    <link href="~/Content/build/css/jquery-ui.css" rel="stylesheet" />
+    <script src="~/Content/build/js/jquery-ui.js"></script>
+</head>
+
+<body class="login">
+    <div>
+        <a class="hiddenanchor" id="signup"></a>
+        <a class="hiddenanchor" id="signin"></a>
+        <a class="hiddenanchor" id="registration"></a>
+
+        <div class="login_wrapper">
+            <div class="animate form login_form">
+                <section class="login_content">
+                    <div>
+                        <img src="~/Content/build/images/logo.png" />
+                        @using (Html.BeginForm("UserControl", "Login"))
+                        {
+                        @Html.AntiForgeryToken()
+                        <div>
+                            @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control", @placeholder = "E-Posta", @required = "required", @type = "email" } })
+                            @Html.ValidationMessageFor(model => model.email, "", new { @style = "color:red;font-weight:600; padding-bottom:5px;" })
+                        </div>
+                        <div>
+                            @Html.EditorFor(model => model.password, new { htmlAttributes = new { @type = "password", @class = "form-control", @placeholder = "Şifre", @required = "required" } })
+                            @Html.ValidationMessageFor(model => model.password, "", new { @style = "color:red;font-weight:600; padding-bottom:5px;" })
+                        </div>
+                        <div style="color:red;font-weight:600;">
+                            @Html.ValidationSummary(false)
+                        </div>
+
+                        <div>
+                            <button type="submit" style="width: 100%;" class="btn btn-success">Giriş</button>
+                        </div>
+                        }
+
+                        <div class="clearfix"></div>
+
+                        <div class="separator">
+                            <p class="change_link">
+                                Şifrenizi mi Unuttunuz?
+                                <a href="#signup" class="to_register"> Tıklayın </a>
+                            </p>
+                            <p class="change_link">
+                                Şifrenizi Değiştirmek mi İstiyorsunuz?
+                                <a href="~/Login/Regestration" class="to_register"> Tıklayın </a>
+                            </p>
+                            <div class="clearfix"></div>
+                            <br />
+
+                            <div>
+                                <h1><i class="fa fa-paw"></i> MatTracWeb!</h1>
+                                <p>©2022 Her hakkı saklıdır. MatTracWeb! bir Malzeme Takip Uygulamasadır. Gizlilik ve Şartlar</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div id="register" class="animate form registration_form">
+                <section class="login_content">
+                    <div>
+                        <img src="~/Content/build/images/logo.png" />
+                        <h1>Şifremi Unuttum?</h1>
+                        <div style="margin-bottom:5px;">
+                            <input type="email" class="form-control" id="txtEmail" name="txtEmail" placeholder="E-Posta Adresinizi Yazın" required="" />
+                        </div>
+                        <div>
+
+                            <button type="button" class="btn btn-info" id="btnGonder" style="width: 100%;">Gönder</button>
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                        <div class="separator">
+                            <p class="change_link">
+                                Zaten bir hesabınız varsa Giriş'e tıklayın ?
+                                <a href="#signin" class="to_register"> Giriş </a>
+                            </p>
+
+                            <div class="clearfix"></div>
+                            <br />
+
+                            <div>
+                                <h1><i class="fa fa-paw"></i> MatTracWeb!</h1>
+                                <p>©2022 Her hakkı saklıdır. MatTracWeb! bir Malzeme Takip Uygulamasadır. Gizlilik ve Şartlar</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <script>
+        $("#btnGonder").click(function (e) {
+            e.preventDefault();
+            var email = $("#txtEmail").val();
+            var emailFilter = /^([\w-]+(?:\.[\w-]+)*)@@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+            if (email == "" || email == null) {
+                $('<div title="Uyarı"></div>').dialog({
+                    open: function (event, ui) {
+                        $(this).html("E-Posta Alanı Boş Geçilemez");
+                    },
+                    close: function () {
+                        $(this).remove();
+                    },
+                    resizable: true,
+                    modal: true,
+                    buttons: {
+                        'Tamam': function () {
+                            $(this).dialog('close');
+                        }
+                    }
+                });
+
+            }
+            else if (!emailFilter.test(email)) {
+                $('<div title="Uyarı"></div>').dialog({
+                    open: function (event, ui) {
+                        $(this).html("Geçerli Bir E-Posta Adresi Giriniz!!!");
+                    },
+                    close: function () {
+                        $(this).remove();
+                    },
+                    resizable: true,
+                    modal: true,
+                    buttons: {
+                        'Tamam': function () {
+                            $(this).dialog('close');
+                        }
+                    }
+                });
+                return false;
+            }
+            else {
+                $.ajax({
+                    type: "GET",
+                    url: '@Url.Action("EmailControl", "Login")',
+                    data: { "email": email },
+                    success: function (responce) {
+                        if (responce == "0") {
+                            $('<div title="Uyarı"></div>').dialog({
+                                open: function (event, ui) {
+                                    $(this).html("Sistemde kayıtlı bir e-posta adresi bulunamadı.");
+                                },
+                                close: function () {
+                                    $(this).remove();
+                                },
+                                resizable: true,
+                                modal: true,
+                                buttons: {
+                                    'Tamam': function () {
+                                        $(this).dialog('close');
+                                        window.location.reload(false);
+                                    }
+                                }
+                            });
+                        }
+                        else if (responce == "1") {
+                            $('<div title="Uyarı"></div>').dialog({
+                                open: function (event, ui) {
+                                    $(this).html("Giriş Kodu Eposta Adresinize Başarı ile Gönderildi.");
+                                },
+                                close: function () {
+                                    $(this).remove();
+                                },
+                                resizable: true,
+                                modal: true,
+                                buttons: {
+                                    'Tamam': function () {
+                                        $(this).dialog('close');
+                                        window.location.reload(false);
+                                    }
+                                }
+                            });
+                        }
+                        else if (responce == "2") {
+                            $('<div title="Uyarı"></div>').dialog({
+                                open: function (event, ui) {
+                                    $(this).html("1 Saat içinde en fazla üç defa şifre talebinde bulunabalir.");
+                                },
+                                close: function () {
+                                    $(this).remove();
+                                },
+                                resizable: true,
+                                modal: true,
+                                buttons: {
+                                    'Tamam': function () {
+                                        $(this).dialog('close');
+                                        window.location.reload(false);
+                                    }
+                                }
+                            });
+                        }
+                    },
+                    error: function (err) {
+                        console.log(err)
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

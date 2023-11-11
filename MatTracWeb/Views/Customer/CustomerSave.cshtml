@@ -1,0 +1,362 @@
+﻿
+@{
+    ViewBag.Title = "CustomerSave";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Content/vendors/jquery/dist/jquery.min.js"></script>
+<script src="~/Content/build/js/jquery-input-mask-phone-number.js"></script>
+<link href="~/Content/build/css/jquery-ui.css" rel="stylesheet" />
+<script src="~/Content/build/js/jquery-ui.js"></script>
+<script src="~/Content/vendors/iCheck/icheck.min.js"></script>
+<script src="~/Content/vendors/select2/dist/js/select2.min.js"></script>
+<script src="~/Content/dropsearch/js/countrypicker.js"></script>
+<script src="~/Content/dropsearch/js/bootstrap-select.min.js"></script>
+<script src="~/Content/dropsearch/js/console.js"></script>
+
+<!-- page content -->
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3></h3>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12 ">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>MÜŞTERİ EKLE</h2>
+                        <ul class="nav navbar-right panel_toolbox"></ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <br />
+                        <div class="form-horizontal form-label-left">
+                            <div class="form-group row">
+                                <label class="control-label col-md-3 col-sm-3 ">T.C. No<span class="required">*</span></label>
+                                <div class="col-md-9 col-sm-9 ">
+                                    <input type="text" class="form-control" name="tcno" id="tcno" title="T.C. No" placeholder="T.C. No" maxlength="11" min="11" onKeyPress="return sedeceSayi(event)">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="control-label col-md-3 col-sm-3 ">Adı<span class="required">*</span></label>
+                                <div class="col-md-9 col-sm-9 ">
+                                    <input type="text" class="form-control" name="UserName" id="UserName" title="Adı" placeholder="Adı">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="control-label col-md-3 col-sm-3">Soyadı<span class="required">*</span></label>
+                                <div class="col-md-9 col-sm-9 ">
+                                    <input type="text" class="form-control" name="UserSurname" id="UserSurname" placeholder="Soyadı">
+                                </div>
+                            </div>
+                            <div class="form-group row ">
+                                <label class="control-label col-md-3 col-sm-3 ">Cep Telefonu<span class="required">*</span></label>
+                                <div class="col-md-9 col-sm-9 ">
+                                    <input type="text" name="Phone" id="Phone" class="form-control" maxlength="14" placeholder="Cep Telefonu">
+                                </div>
+                            </div>
+                            <div class="form-group row ">
+                                <label class="control-label col-md-3 col-sm-3 ">E-Posta<span class="required">*</span></label>
+                                <div class="col-md-9 col-sm-9 ">
+                                    <input type="text" class="form-control" name="Email" id="Email" placeholder="E-Posta">
+                                </div>
+                            </div>
+                            <p id="emailHata" style="margin-left: 25px; margin-right: 25px; text-align: center;color: darkorange"></p>
+                            <script>
+                                    Email.addEventListener("change", function () {
+                                        emailCtrl(event.target.value)
+                                    })
+                                    function emailCtrl(value) {
+                                        debugger;
+                                        var emailFilter = /^([\w-]+(?:\.[\w-]+)*)@@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+                                        if (!emailFilter.test(value)) {
+                                            text = "E-Posta Formatı Hatalı Lütfen Düzeltin !!!";
+                                            document.getElementById("emailHata").innerHTML = text;
+                                        }
+                                        else {
+                                            document.getElementById("emailHata").innerHTML = "";
+                                        }
+                                    }
+
+                            </script>
+                            <div class="form-group row ">
+                                <label class="control-label col-md-3 col-sm-3 ">Adres<span class="required">*</span></label>
+                                <div class="col-md-9 col-sm-9 ">
+                                    <input type="text" name="adres" id="adres" class="form-control" placeholder="Adres">
+                                </div>
+                            </div>
+                            <div class="form-group row ">
+                                <label class="control-label col-md-3 col-sm-3 ">Vergi No<span class="required">*</span></label>
+                                <div class="col-md-9 col-sm-9 ">
+                                    <input type="text" name="vergino" id="vergino" class="form-control" placeholder="Vergi No">
+                                </div>
+                            </div>
+                            <div class="form-group row ">
+                                <label class="control-label col-md-3 col-sm-3 ">Vergi Dairesi<span class="required">*</span></label>
+                                <div class="col-md-9 col-sm-9 ">
+                                    <input type="text" name="vergidaire" id="vergidaire" class="form-control" placeholder="Vergi Dairesi">
+                                </div>
+                            </div>
+                            <div class="ln_solid"></div>
+                            <div class="form-group">
+                                <div class="col-md-9 col-sm-9  offset-md-3">
+                                    <button type="reset" class="btn btn-primary">Temizle</button>
+                                    <button type="button" id="btnKaydet" class="btn btn-success">Kaydet</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">  
+
+    $(document).ready(function () {
+        $('#Phone').usPhoneFormat({
+            format: '(xxx) xxx-xxxx',
+        });
+        function sedeceSayi(evt) {
+            evt = (evt) ? evt : window.event
+            var charCode = (evt.which) ? evt.which : evt.keyCode
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false
+            }
+            return true
+        }
+    });
+
+
+
+    $("#btnKaydet").click(function (e) {
+        e.preventDefault();
+        debugger;
+        var tcno = $("#tcno").val();        
+        var UserName = $("#UserName").val();
+        var UserSurname = $("#UserSurname").val();
+        var Phone = $("#Phone").val();
+        var Email = $("#Email").val();
+        var adres = $("#adres").val();
+        var vergino = $("#vergino").val();
+        var vergidaire = $("#vergidaire").val();
+
+        if (tcno == "" || tcno == null) {
+            $('<div title="Uyarı"></div>').dialog({
+                open: function (event, ui) {
+                    $(this).html("T.C. No Alanı Boş Geçilemez");
+                },
+                close: function () {
+                    $(this).remove();
+                },
+                resizable: true,
+                modal: true,
+                buttons: {
+                    'Tamam': function () {
+                        $(this).dialog('close');
+                    }
+                }
+            });
+        }
+        else if (UserName == "" || UserName == null) {
+            $('<div title="Uyarı"></div>').dialog({
+                open: function (event, ui) {
+                    $(this).html("Adı Alanı Boş Geçilemez");
+                },
+                close: function () {
+                    $(this).remove();
+                },
+                resizable: true,
+                modal: true,
+                buttons: {
+                    'Tamam': function () {
+                        $(this).dialog('close');
+                    }
+                }
+            });
+        }
+        else if (UserSurname == "" || UserSurname == null) {
+            $('<div title="Uyarı"></div>').dialog({
+                open: function (event, ui) {
+                    $(this).html("Soyadı Alanı Boş Geçilemez");
+                },
+                close: function () {
+                    $(this).remove();
+                },
+                resizable: true,
+                modal: true,
+                buttons: {
+                    'Tamam': function () {
+                        $(this).dialog('close');
+                    }
+                }
+            });
+        }
+        else if (Phone == "" || Phone == null) {
+            $('<div title="Uyarı"></div>').dialog({
+                open: function (event, ui) {
+                    $(this).html("Cep Telefonu Alanı Boş Geçilemez");
+                },
+                close: function () {
+                    $(this).remove();
+                },
+                resizable: true,
+                modal: true,
+                buttons: {
+                    'Tamam': function () {
+                        $(this).dialog('close');
+                    }
+                }
+            });
+        }
+        else if (Email == "" || Email == null) {
+            $('<div title="Uyarı"></div>').dialog({
+                open: function (event, ui) {
+                    $(this).html("E-Posta Alanı Boş Geçilemez");
+                },
+                close: function () {
+                    $(this).remove();
+                },
+                resizable: true,
+                modal: true,
+                buttons: {
+                    'Tamam': function () {
+                        $(this).dialog('close');
+                    }
+                }
+            });
+        }
+        else if (adres == "" || adres == null) {
+            $('<div title="Uyarı"></div>').dialog({
+                open: function (event, ui) {
+                    $(this).html("Adres Alanı Boş Geçilemez");
+                },
+                close: function () {
+                    $(this).remove();
+                },
+                resizable: true,
+                modal: true,
+                buttons: {
+                    'Tamam': function () {
+                        $(this).dialog('close');
+                    }
+                }
+            });
+        }
+        else if (vergino == "" || vergino == null) {
+            $('<div title="Uyarı"></div>').dialog({
+                open: function (event, ui) {
+                    $(this).html("Vergi No Alanı Boş Geçilemez");
+                },
+                close: function () {
+                    $(this).remove();
+                },
+                resizable: true,
+                modal: true,
+                buttons: {
+                    'Tamam': function () {
+                        $(this).dialog('close');
+                    }
+                }
+            });
+        }
+        else if (vergidaire == "" || vergidaire == null) {
+            $('<div title="Uyarı"></div>').dialog({
+                open: function (event, ui) {
+                    $(this).html("Vergi Dairesi Alanı Boş Geçilemez");
+                },
+                close: function () {
+                    $(this).remove();
+                },
+                resizable: true,
+                modal: true,
+                buttons: {
+                    'Tamam': function () {
+                        $(this).dialog('close');
+                    }
+                }
+            });
+        }
+        else {
+            var myData = { 
+                CustomerName: UserName,
+                CustomerSurname: UserSurname,
+                CustomerPhone: Phone,
+                CustomerEmail: Email,
+                CustomerAddress: adres,
+                CustomerTcNo: tcno,
+                VergiNo: vergino,
+                VergiDairesi: vergidaire
+            };
+            $.ajax({
+                type: "GET",
+                url: "/Customer/CustomerSaveSvc",
+                data: myData,
+                success: function (data) {
+                    $('#CustomerModalEdit').modal('hide');
+                    if (data == "1") {
+                        $('<div title="Güncelleme İşlemi"></div>').dialog({
+                            open: function (event, ui) {
+                                $(this).html("Kaydetme İşlemi Başarılı");
+                            },
+                            close: function () {
+                                $(this).remove();
+                            },
+                            resizable: true,
+                            modal: true,
+                            buttons: {
+                                'Tamam': function () {
+                                    $(this).dialog('close');
+                                    window.location.reload(false);
+                                }
+                            }
+                        });
+                    }
+                    else {
+                        $('<div title="Güncelleme İşlemi"></div>').dialog({
+                            open: function (event, ui) {
+                                $(this).html("Kaydetme İşlemi Başarısız");
+                            },
+                            close: function () {
+                                $(this).remove();
+                            },
+                            resizable: true,
+                            modal: true,
+                            buttons: {
+                                'Tamam': function () {
+                                    $(this).dialog('close');
+                                    window.location.reload(false);
+                                }
+                            }
+                        });
+                    }
+                },
+                error: function (err) {
+                    $('#CustomerModalEdit').modal('hide');
+                    $('<div title="Hata"></div>').dialog({
+                        open: function (event, ui) {
+                            $(this).html("Hata Oluştu");
+                        },
+                        close: function () {
+                            $(this).remove();
+                        },
+                        resizable: true,
+                        modal: true,
+                        buttons: {
+                            'Tamam': function () {
+                                $(this).dialog('close');
+                                window.location.reload(false);
+                            }
+                        }
+                    });
+                }
+
+            });
+        }
+
+    });
+</script>
+<!-- /page content -->

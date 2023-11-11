@@ -1,0 +1,355 @@
+﻿
+@{
+    ViewBag.Title = "UserProcess";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- page content -->
+<link href="~/styles/kendo.common.min.css" rel="stylesheet" />
+<link href="~/styles/kendo.default.mobile.min.css" rel="stylesheet" />
+<link href="~/styles/kendo.default.min.css" rel="stylesheet">
+<script src="~/js/jquery.min.js"></script>
+<script src="~/js/kendo.all.min.js"></script>
+<script src="~/Scripts/kendo/cultures/kendo.culture.tr-TR.min.js"></script>
+<script src="~/Scripts/kendo/messages/kendo.messages.tr-TR.min.js"></script>
+<link href="~/Content/build/css/jquery-ui.css" rel="stylesheet" />
+<script src="~/Content/build/js/jquery-ui.js"></script>
+<script src="~/Content/build/js/jquery-input-mask-phone-number.min.js"></script>
+<div class="right_col" role="main">
+    <div class="">       
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Kullanıcı Listesi <small>Düzenleme Form</small></h2>
+
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <br />
+                        <div class="col-lg-12">
+                            <div class="iq-card">                               
+                                <div class="iq-card-body">
+                                    <div id="grid"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script id="popup-editor" type="text/x-kendo-template">
+        <div class="k-edit-form-container">
+            <div class="k-edit-label"><label for="UserName">Adı</label></div><div data-container-for="UserName" class="k-edit-field">
+                <input type="text" id="UserName" name="UserName" title="Adı" data-bind="value:UserName" class="k-textbox">
+            </div>
+            <div class="k-edit-label"><label for="UserSurname">Soyadı</label></div><div data-container-for="UserSurname" class="k-edit-field">
+                <input type="text" id="UserSurname" name="UserSurname" title="Soyadı" data-bind="value:UserSurname" class="k-textbox">
+            </div>
+            <div class="k-edit-label"><label for="Email">E-Posta</label></div><div data-container-for="Email" class="k-edit-field">
+                <input type="text" id="Email" name="Email" title="Email" data-bind="value:Email" class="k-textbox">
+            </div>
+            <div class="k-edit-label"><label for="TcNo">TcNo</label></div><div data-container-for="TcNo" class="k-edit-field">
+                <input type="text" id="TcNo" name="TcNo" title="TcNo" data-bind="value:TcNo" class="k-textbox">
+            </div>
+            <div class="k-edit-label"><label for="Phone">Cep Telefonu</label></div><div data-container-for="Phone" class="k-edit-field">
+                <input type="text" id="Phone" name="Phone" title="Cep Telefonu" data-bind="value:Phone" class="k-textbox">
+            </div>
+            <div class="k-edit-label"><label for="AuthorizationTypeName">Yetki Türü</label></div>
+            <div data-container-for="AuthorizationTypeName" class="k-edit-field">
+                <select data-bind="value: AuthorizationTypeName" class="k-textbox" style="height: 2.13em;">
+                    <option>Standart Kullanıcı</option>
+                    <option>Admin Kullanıcı</option>
+                    <option>Super Admin Kullanıcı</option>
+                </select>
+            </div>
+            <div class="k-edit-label"><label for="WebPlatform">Web Yetkisi</label></div>
+            <div data-container-for="WebPlatform" class="k-edit-field">
+                <select data-bind="value: WebPlatform" class="k-textbox" style="height: 2.13em;">
+                    <option>Evet</option>
+                    <option>Hayır</option>
+                </select>
+            </div>
+            <div class="k-edit-label"><label for="AndoridPlatform">Android Yetkisi</label></div>
+            <div data-container-for="AndoridPlatform" class="k-edit-field">
+                <select data-bind="value: AndoridPlatform" class="k-textbox" style="height: 2.13em;">
+                    <option>Evet</option>
+                    <option>Hayır</option>
+                </select>
+            </div>
+            <div class="k-edit-label"><label for="IOSPlatform">IOS Yetkisi</label></div>
+            <div data-container-for="IOSPlatform" class="k-edit-field">
+                <select data-bind="value: IOSPlatform" class="k-textbox" style="height: 2.13em;">
+                    <option>Evet</option>
+                    <option>Hayır</option>
+                </select>
+            </div>
+        </div>
+    </script>
+    <script>
+        $(document).ready(function () {
+            
+            $.ajax({
+                type: "GET",
+                url: "/UserOperation/UserListTemp",
+                success: function (data) {
+                    debugger;
+                    document.querySelector('#grid').innerHTML = "";
+                    $("#grid").kendoGrid({
+                        dataSource: {
+                            type: "odata",
+                            data: data,
+                            schema: {
+                                model: {
+                                    id: "UserId",
+                                    fields: {
+                                        UserId: { type: "string", editable: false },
+                                        UserName: { type: "string", editable: true },
+                                        UserSurname: { type: "string", editable: true },
+                                        Email: { type: "string", editable: true },
+                                        TcNo: { type: "string", editable: true },
+                                        Phone: { type: "string", editable: true },
+                                        AuthorizationTypeName: { type: "string", editable: true },
+                                        WebPlatform: { type: "string", editable: true },
+                                        AndoridPlatform: { type: "string", editable: true },
+                                        IOSPlatform: { type: "string", editable: true }
+                                    }
+                                },
+                                expanded: true
+                            },
+                            pageSize: 20,
+                            sort: ({
+                                field: "date",
+                                dir: "desc"
+                            })
+
+                        },
+                        noRecords: {
+                            template: "<div class='empty-grid'></div>"
+                        },
+                        pageable: {
+                            alwaysVisible: false
+                        },
+                        editable: {
+                            template: kendo.template($("#popup-editor").html()),
+                            mode: "popup"
+                        },
+
+                        columns: [
+                            {
+                                field: "UserName",
+                                title: "Adı",
+                                width: 40
+                            },
+                            {
+                                field: "UserSurname",
+                                title: "Soyadı",
+                                width: 40
+                            },
+                            {
+                                field: "Email",
+                                title: "E-Posta",
+                                width: 70
+                            },
+                            {
+                                field: "TcNo",
+                                title: "TcNo",
+                                width: 40
+                            },
+                            {
+                                field: "Phone",
+                                title: "Cep Telefonu",
+                                width: 50
+                            },
+                            {
+                                field: "AuthorizationTypeName",
+                                title: "Kullanıcı Yetki",
+                                width: 50
+                            },
+                            {
+                                field: "WebPlatform",
+                                title: "Web Yetkisi",
+                                width: 40
+                            },
+                            {
+                                field: "AndoridPlatform",
+                                title: "Android Yetkisi",
+                                width: 40
+                            },
+                            {
+                                field: "IOSPlatform",
+                                title: "IOS Yetkisi",
+                                width: 40
+                            },
+                            {
+                                title: "Düzenle",
+                                command: ["edit"],
+                                width: 60
+                            },
+                            {
+                                field: "Kaydet",
+                                title: "Kaydet",
+                                width: 50,
+                                template: "<button class='btn btn-success pull-left' onclick='UserSave(\"#:data.UserId#\", \"#:data.UserName#\", \"#:data.UserSurname#\", \"#:data.Email#\", \"#:data.TcNo#\", \"#:data.Phone#\", \"#:data.AuthorizationTypeName#\", \"#:data.WebPlatform#\",  \"#:data.AndoridPlatform#\" ,  \"#:data.IOSPlatform#\"  )'>Kaydet</button>"
+
+                            },
+                            {
+                                field: "Sil",
+                                title: "Sil",
+                                width: 40,
+                                template: "<button class='btn btn-success pull-left' onclick='UserDelete(\"#:data.UserId#\" )'>Sil</button>"
+                            }
+                        ]
+                    });
+                }
+            });
+
+
+        });
+        function UserSave(UserId, UserName, UserSurname, Email, TcNo, Phone, AuthorizationTypeName, WebPlatform, AndoridPlatform, IOSPlatform) {           
+            var usertype = AuthorizationTypeName == "Super Admin Kullanıcı" ? 3 : AuthorizationTypeName == "Admin Kullanıcı" ? 2 : 1;
+            var android = AndoridPlatform == "Evet" ? true : false;
+            var web = WebPlatform == "Evet" ? true : false;
+            var ios = IOSPlatform == "Evet" ? true : false;
+            var myData = {
+                UserId: UserId,
+                UserName: UserName,
+                UserSurname: UserSurname,
+                Email: Email,
+                TcNo: TcNo,
+                Phone: Phone,
+                UserAuthorization: usertype,
+                WebPlatform: web,
+                AndoridPlatform: android,
+                IOSPlatform: ios
+            };
+            $.ajax({
+                type: "GET",
+                url: "/UserOperation/UserUpdateSave",
+                data: myData,
+                success: function (data) {
+                    
+                    if (data == "1") {
+                        $('<div title="Güncelleme İşlemi"></div>').dialog({
+                            open: function (event, ui) {
+                                $(this).html("Güncelleme Başarılı");
+                            },
+                            close: function () {
+                                $(this).remove();
+                            },
+                            resizable: true,
+                            modal: true,
+                            buttons: {
+                                'Tamam': function () {
+                                    $(this).dialog('close');
+                                    window.location.reload(false);
+                                }
+                            }
+                        });
+                    } else {
+                        $('<div title="Güncelleme İşlemi"></div>').dialog({
+                            open: function (event, ui) {
+                                $(this).html("Güncelleme Başarısız");
+                            },
+                            close: function () {
+                                $(this).remove();
+                            },
+                            resizable: true,
+                            modal: true,
+                            buttons: {
+                                'Tamam': function () {
+                                    $(this).dialog('close');
+                                    window.location.reload(false);
+                                }
+                            }
+                        });
+                    }
+                },
+                error: function (err) {
+                    $('<div title="Hata"></div>').dialog({
+                        open: function (event, ui) {
+                            $(this).html("Hata Oluştu");
+                        },
+                        close: function () {
+                            $(this).remove();
+                        },
+                        resizable: true,
+                        modal: true,
+                        buttons: {
+                            'Tamam': function () {
+                                $(this).dialog('close');
+                                window.location.reload(false);
+                            }
+                        }
+                    });
+                }
+            });
+        };
+        function UserDelete(UserId) {
+            $('<div title="Silme İşlemi"></div>').dialog({
+                open: function (event, ui) {
+                    $(this).html("Seçili Kullanıcı Silinecek Eminmisiniz?");
+                },
+                close: function () {
+                    $(this).remove();
+                },
+                resizable: true,
+                modal: true,
+                buttons: {
+                    'Evet': function () {
+                        debugger;
+                        $(this).dialog('close');
+                        $.ajax({
+                            type: "GET",
+                            url: "/UserOperation/UserDelete",
+                            data: { 'UserId': UserId },
+                            success: function (data) {
+                                $('<div title="Güncelleme İşlemi"></div>').dialog({
+                                    open: function (event, ui) {
+                                        $(this).html("Silme İşlemi Başarılı");
+                                    },
+                                    close: function () {
+                                        $(this).remove();
+                                    },
+                                    resizable: true,
+                                    modal: true,
+                                    buttons: {
+                                        'Tamam': function () {
+                                            $(this).dialog('close');
+                                            window.location.reload(false);
+                                        }
+                                    }
+                                });
+
+                            },
+                            error: function (err) {
+                                $('<div title="Güncelleme İşlemi"></div>').dialog({
+                                    open: function (event, ui) {
+                                        $(this).html("Hata Olştu");
+                                    },
+                                    close: function () {
+                                        $(this).remove();
+                                    },
+                                    resizable: true,
+                                    modal: true,
+                                    buttons: {
+                                        'Tamam': function () {
+                                            $(this).dialog('close');
+                                            window.location.reload(false);
+                                        }
+                                    }
+                                });
+                            }
+                        });
+
+                    }
+                }
+            });
+        }
+    </script>
+</div>
+
+
+<!-- /page content -->

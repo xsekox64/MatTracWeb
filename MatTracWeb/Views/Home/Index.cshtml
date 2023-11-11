@@ -1,0 +1,172 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script src="~/js/jquery.min.js"></script>
+<link href="~/Content/build/css/calendar-style.css" rel="stylesheet" />
+<script src="~/Content/build/js/calendar.js"></script>
+
+<div class="right_col" role="main">
+    
+    <div class="">
+        
+        <div class="row">
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-info">
+                    <div class="tile-stats bg-info" style="color:white;">
+                        <div class="icon" style="color:white;"><i class="fa fa-user"></i></div>
+                        <div class="count" style="color:white;">179</div>
+                        <h3 style="color:white;"> Toplam Müşteri <br />Sayısı</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-success">
+                    <div class="tile-stats bg-success" style="color:white;">
+                        <div class="icon"  style="color:white;"><i class="fa fa-automobile"></i></div>
+                        <div class="count"  style="color:white;">2500</div>
+                        <h3  style="color:white;"> Bakım Yapılan <br />Araç Sayısı</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-warning">
+                    <div class="tile-stats bg-warning" style="color:white;">
+                        <div class="icon" style="color:white;"><i class="fa fa-gears"></i></div>
+                        <div class="count" style="color:white;">1079</div>
+                        <h3 style="color:white;"> Toplam Malzeme <br />Sayısı</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-danger">
+                    <div class="tile-stats bg-danger" style="color:white;">
+                        <div class="icon" style="color:white;"><i class="fa fa-check-square-o"></i></div>
+                        <div class="count" style="color:white;">179</div>
+                        <h3 style="color:white;"> Toplam Satış <br />Adedi</h3>
+                    </div>
+                </div>
+            </div>
+        </div>  
+          
+        <div class="row">
+            <div class="col-md-6 col-sm-12  ">
+                <div class="x_panel">
+                    <div class="x_title">                       
+                        <h2>Takvim <small>güzel bir takvim</small></h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <br />
+                        <div class="calendar">
+                            <div class="calendar-footer">
+                                <div class="next-prev">
+                                    <div class="btn-info btn prev-btn">Önceki</div>
+                                    <div class="btn-info btn next-btn">Sonraki</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-12  ">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Hava Durumu <br /><small>Uşak İçin 7 günlük hava tahmini</small></h2>                        
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <br />
+                        <script>
+                            (function (d, s, id) {
+                                if (d.getElementById(id)) {
+                                    if (window.__TOMORROW__) {
+                                        window.__TOMORROW__.renderWidget();
+                                    }
+                                    return;
+                                }
+                                const fjs = d.getElementsByTagName(s)[0];
+                                const js = d.createElement(s);
+                                js.id = id;
+                                js.src = "https://www.tomorrow.io/v1/widget/sdk/sdk.bundle.min.js";
+
+                                fjs.parentNode.insertBefore(js, fjs);
+                            })(document, 'script', 'tomorrow-sdk');
+                        </script>
+                        <div class="tomorrow"
+                             data-location-id="108644"
+                             data-language="TR"
+                             data-unit-system="METRIC"
+                             data-skin="dark"
+                             data-widget-type="upcoming"
+                             style="padding-bottom:22px;position:relative;">
+                            <a href="https://www.tomorrow.io/weather-api/"
+                               rel="nofollow noopener noreferrer"
+                               target="_blank"
+                               style="position: absolute; bottom: 0; transform: translateX(-50%); left: 50%;">
+
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Piyasalar</h2>                        
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                     
+                            <div class="tradingview-widget-container">
+                                <div class="tradingview-widget-container__widget"></div>   <div class="tradingview-widget-copyright">
+                                    <a href="https://tr.tradingview.com" _fcksavedurl="https://tr.tradingview.com" rel="noopener" target="_blank">
+                                        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+                                            {
+                                                "symbols": [
+                                                  {
+                                                      "proName": "OANDA:SPX500USD",
+                                                      "title": "SP 500"
+                                                  },
+                                                  {
+                                                      "proName": "FX_IDC:EURUSD",
+                                                      "title": "EUR/USD"
+                                                  },
+                                                  {
+                                                      "proName": "BITSTAMP:BTCUSD",
+                                                      "title": "BTC/USD"
+                                                  },
+                                                  {
+                                                      "proName": "BITSTAMP:ETHUSD",
+                                                      "title": "ETH/USD"
+                                                  }
+                                                ],
+                                                "colorTheme": "light",
+                                                "isTransparent": false,
+                                                "displayMode": "adaptive",
+                                                "locale": "tr"
+                                            }
+                                        </script>
+                                </div> <!-- beterbocekler.tr.gg Widget sonu -->
+                            </div>
+                        </div>
+                        <div id="kurlar"></div>
+                        <script async src="https://dovizmix.com/dovizmix/js/dovizwidget.min.js" type="text/javascript" charset="utf-8"></script>
+                    
+                </div>
+            </div>
+
+        </div>
+    </div>
+    
+
+</div>
+<!-- /page content -->
+<script>
+    let c = $('.calendar');   
+    let calendar = new Calendar(c);    
+    c.find('.ok-btn').on('click', function () { });
+</script>

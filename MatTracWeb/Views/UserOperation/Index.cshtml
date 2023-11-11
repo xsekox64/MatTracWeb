@@ -1,0 +1,369 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Content/vendors/jquery/dist/jquery.min.js"></script>
+<script src="~/Content/build/js/jquery-input-mask-phone-number.js"></script>
+<link href="~/Content/build/css/jquery-ui.css" rel="stylesheet" />
+<script src="~/Content/build/js/jquery-ui.js"></script>
+<!-- page content -->
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3></h3>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12 ">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>KULLANICI EKLE</h2>
+                        <ul class="nav navbar-right panel_toolbox"></ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <br />
+                        <div class="form-horizontal form-label-left">
+                            <div class="form-group row ">
+                                <label class="control-label col-md-3 col-sm-3 ">Adı<span class="required">*</span></label>
+                                <div class="col-md-9 col-sm-9 ">
+                                    <input type="text" class="form-control" name="txtAdi" id="txtAdi" placeholder="Adı">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="control-label col-md-3 col-sm-3 ">Soyadı<span class="required">*</span></label>
+                                <div class="col-md-9 col-sm-9 ">
+                                    <input type="text" class="form-control" name="txtSoyadi" id="txtSoyadi" placeholder="Soyadı">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="control-label col-md-3 col-sm-3 ">E-Posta<span class="required">*</span></label>
+                                <div class="col-md-9 col-sm-9 ">
+                                    <input type="text" class="form-control" name="txtEposta" id="txtEposta"  placeholder="E-Posta">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="control-label col-md-3 col-sm-3 ">Kullanıcı Yetkisi<span class="required">*</span></label>
+                                <div class="col-md-9 col-sm-9 ">
+                                    <select class="form-control" name="selectYetki" id="selectYetki">
+                                        <option value="0">Seçiniz...</option>
+                                        <option value="1">Standart Kullanıcı</option>
+                                        <option value="2">Admin Kullanıcı</option>
+                                        <option value="3">Super Admin Kullanıcı</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row ">
+                                <label class="control-label col-md-3 col-sm-3 ">T.C. Kimlik No<span class="required">*</span></label>
+                                <div class="col-md-9 col-sm-9 ">
+                                    <input type="text" class="form-control" name="txtTcno"  id="txtTcno"  placeholder="T.C. Kimlik No" MaxLength="11" onKeyPress="return sedeceSayi(event)">
+                                </div>
+                            </div>
+                            <div class="form-group row ">
+                                <label class="control-label col-md-3 col-sm-3 ">Cep Telefonu<span class="required">*</span></label>
+                                <div class="col-md-9 col-sm-9 ">
+                                    <input type="text" name="txtCeptelefon"  id="txtCeptelefon" class="form-control" placeholder="Cep Telefonu">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-sm-3  control-label">
+                                    Web Yetkisi
+                                    <br>
+                                    <small class="text-navy">Web Sayfasını Kullanmak İçin Yetki Verin</small>
+                                </label>
+                                <div class="col-md-9 col-sm-9 ">
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" class="flat" name="iCheckWeb" value="1"> Evet
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" class="flat" checked name="iCheckWeb" value="0"> Hayır
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-sm-3  control-label">
+                                    Android Yetkisi
+                                    <br>
+                                    <small class="text-navy">Android Uygulamasını Kullanmak İçin Yetki Verin</small>
+                                </label>
+                                <div class="col-md-9 col-sm-9 ">
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" class="flat" name="iCheckAnd" value="1"> Evet
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" class="flat" checked name="iCheckAnd" value="0"> Hayır
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-sm-3  control-label">
+                                    IOS Yetkisi
+                                    <br>
+                                    <small class="text-navy">IOS Uygulamasını Kullanmak İçin Yetki Verin</small>
+                                </label>
+                                <div class="col-md-9 col-sm-9 ">
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" class="flat" name="iCheckIOS" value="1"> Evet
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" class="flat" checked name="iCheckIOS" value="0"> Hayır
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="ln_solid"></div>
+                            <div class="form-group">
+                                <div class="col-md-9 col-sm-9  offset-md-3">
+                                    <button type="reset" class="btn btn-primary">Temizle</button>
+                                    <button type="button" id="btnKaydet" class="btn btn-success">Kaydet</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function sedeceSayi(evt) {
+        evt = (evt) ? evt : window.event
+        var charCode = (evt.which) ? evt.which : evt.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false
+        }
+        return true
+    }
+    $(document).ready(function () {
+        $('#txtCeptelefon').usPhoneFormat({
+            format: '(xxx) xxx-xxxx',
+        });
+    });
+    $("#btnKaydet").click(function (e) {        
+        e.preventDefault();
+        var droqdownrole = $("#selectYetki").val();
+        var adi = $("#txtAdi").val();
+        var soyadi = $("#txtSoyadi").val();        
+        var tcno = $("#txtTcno").val();
+        var ceptelefonu = $("#txtCeptelefon").val();
+        var eposta = $("#txtEposta").val();        
+        var emailFilter = /^([\w-]+(?:\.[\w-]+)*)@@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+        var iCheckWeb = $("input[type='radio'][name='iCheckWeb']:checked").val();
+        var iCheckAnd = $("input[type='radio'][name='iCheckAnd']:checked").val();
+        var iCheckIOS = $("input[type='radio'][name='iCheckIOS']:checked").val();
+        if (adi == "" || adi == null) {
+            $('<div title="Uyarı"></div>').dialog({
+                open: function (event, ui) {
+                    $(this).html("Adı Alanı Boş Geçilemez");
+                },
+                close: function () {
+                    $(this).remove();
+                },
+                resizable: true,
+                modal: true,
+                buttons: {
+                    'Tamam': function () {
+                        $(this).dialog('close');
+                    }
+                }
+            });
+        }
+        else if (soyadi == "" || soyadi == null) {
+            $('<div title="Uyarı"></div>').dialog({
+                open: function (event, ui) {
+                    $(this).html("Soyadı Alanı Boş Geçilemez");
+                },
+                close: function () {
+                    $(this).remove();
+                },
+                resizable: true,
+                modal: true,
+                buttons: {
+                    'Tamam': function () {
+                        $(this).dialog('close');
+                    }
+                }
+            });
+        }        
+        else if (eposta == "" || eposta == null) {
+            $('<div title="Uyarı"></div>').dialog({
+                open: function (event, ui) {
+                    $(this).html("E-Posta Alanı Boş Geçilemez");
+                },
+                close: function () {
+                    $(this).remove();
+                },
+                resizable: true,
+                modal: true,
+                buttons: {
+                    'Tamam': function () {
+                        $(this).dialog('close');
+                    }
+                }
+            });
+
+        }
+        else if (!emailFilter.test(eposta)) {
+            $('<div title="Uyarı"></div>').dialog({
+                open: function (event, ui) {
+                    $(this).html("Geçerli Bir E-Posta Adresi Giriniz!!!");
+                },
+                close: function () {
+                    $(this).remove();
+                },
+                resizable: true,
+                modal: true,
+                buttons: {
+                    'Tamam': function () {
+                        $(this).dialog('close');
+                    }
+                }
+            });
+            return false;
+        }
+        else if (droqdownrole == "0") {
+            $('<div title="Uyarı"></div>').dialog({
+                open: function (event, ui) {
+                    $(this).html("Yekti Türünü Seçmediniz");
+                },
+                close: function () {
+                    $(this).remove();
+                },
+                resizable: true,
+                modal: true,
+                buttons: {
+                    'Tamam': function () {
+                        $(this).dialog('close');
+                    }
+                }
+            });
+
+        }
+        else if (tcno == "" || tcno == null) {
+            $('<div title="Uyarı"></div>').dialog({
+                open: function (event, ui) {
+                    $(this).html("Tc No Alanı Boş Geçilemez");
+                },
+                close: function () {
+                    $(this).remove();
+                },
+                resizable: true,
+                modal: true,
+                buttons: {
+                    'Tamam': function () {
+                        $(this).dialog('close');
+                    }
+                }
+            });
+
+        }
+        else if (ceptelefonu == "" || ceptelefonu == null) {
+            $('<div title="Uyarı"></div>').dialog({
+                open: function (event, ui) {
+                    $(this).html("Cep Telefonu Alanı Boş Geçilemez");
+                },
+                close: function () {
+                    $(this).remove();
+                },
+                resizable: true,
+                modal: true,
+                buttons: {
+                    'Tamam': function () {
+                        $(this).dialog('close');
+                    }
+                }
+            });
+        }        
+        else {            
+            var myData = {
+                UserName: adi,
+                UserSurname: soyadi,
+                Email: eposta,
+                UserAuthorization: droqdownrole,
+                TcNo: tcno,
+                Phone: ceptelefonu,
+                WebPlatform: iCheckWeb,
+                AndoridPlatform: iCheckAnd,
+                IOSPlatform: iCheckIOS
+            };
+            $.ajax({
+                type: "GET",
+                url: "/UserOperation/UserSaveControl",
+                data: myData,
+                success: function (data) {
+                    if (data == "1") {
+                        $('<div title="Uyarı"></div>').dialog({
+                            open: function (event, ui) {
+                                $(this).html("Kaydetme İşlemi Başarılı Bir Şekilde Yapıldı.");
+                            },
+                            close: function () {
+                                $(this).remove();
+                            },
+                            resizable: true,
+                            modal: true,
+                            buttons: {
+                                'Tamam': function () {
+                                    $(this).dialog('close');
+                                    window.location.reload(false);
+                                }
+                            }
+                        });
+                    } else if (data == "2") {
+                        $('<div title="Uyarı"></div>').dialog({
+                            open: function (event, ui) {
+                                $(this).html("Kullanıcı Daha Önce Kayıt Edilmiş.");
+                            },
+                            close: function () {
+                                $(this).remove();
+                            },
+                            resizable: true,
+                            modal: true,
+                            buttons: {
+                                'Tamam': function () {
+                                    $(this).dialog('close');
+                                    window.location.reload(false);
+                                }
+                            }
+                        });
+
+                    }
+                    else {
+                        $('<div title="Uyarı"></div>').dialog({
+                            open: function (event, ui) {
+                                $(this).html("Kaydetme İşlemi Başarısız.");
+                            },
+                            close: function () {
+                                $(this).remove();
+                            },
+                            resizable: true,
+                            modal: true,
+                            buttons: {
+                                'Tamam': function () {
+                                    $(this).dialog('close');
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+        }
+    });
+</script>
+<!-- /page content -->

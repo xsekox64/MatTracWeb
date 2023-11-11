@@ -1,0 +1,196 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MatTracWeb! | </title>
+    <link href="~/Content/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/Content/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <link href="~/Content/vendors/animate.css/animate.min.css" rel="stylesheet">
+    <link href="~/Content/build/css/custom.min.css" rel="stylesheet" />
+    <script src="~/Content/vendors/jquery/dist/jquery.min.js"></script>
+    <script src="~/Content/build/js/jquery-input-mask-phone-number.js"></script>
+    <link href="~/Content/build/css/jquery-ui.css" rel="stylesheet" />
+    <script src="~/Content/build/js/jquery-ui.js"></script>
+</head>
+
+<body class="login">
+    <div>
+        <a class="hiddenanchor" id="signup"></a>
+
+        <div class="login_wrapper">
+            <div class="animate form login_form">
+                <section class="login_content">
+                    <form>
+                        <img src="~/Content/build/images/logo.png" />
+                        <h1>Şifre Değiştirme!</h1>
+                        <div>
+                            <input type="email" id="ecode" name="ecode" class="form-control" placeholder="E-Posta Adresinize Gelen Kodu Girin" required="" />
+                        </div>
+                        <div>
+                            <input type="password" id="pass" name="pass" class="form-control" placeholder="Yeni Şifre" required="" />
+                        </div>
+                        <div>
+                            <input type="password" id="againpass" name="againpass" class="form-control" placeholder="Yeni Şifre Tekrar" required="" />
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-success" id="btnKaydet">Kaydet</button>                            
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                        <div class="separator">
+                            <p class="change_link">
+                                Zaten bir hesabınız varsa Giriş'e tıklayın ?
+                                <a href="~/Login/Index"> Giriş </a>
+                            </p>
+
+                            <div class="clearfix"></div>
+                            <br />
+
+                            <div>
+                                <h1><i class="fa fa-paw"></i> MatTracWeb!</h1>
+                                <p>©2022 Her hakkı saklıdır. MatTracWeb! bir Malzeme Takip Uygulamasadır. Gizlilik ve Şartlar</p>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </div>
+    <script>
+        $("#btnKaydet").click(function (e) {
+            var ecode = $("#ecode").val();
+            var password = $("#pass").val();
+            var passwordagain = $("#againpass").val();
+            if (ecode == "" || ecode == null) {
+                $('<div title="Uyarı"></div>').dialog({
+                    open: function (event, ui) {
+                        $(this).html("Eposta Adresinize Gönderlien Kod Alanı Boş Geçilemez");
+                    },
+                    close: function () {
+                        $(this).remove();
+                    },
+                    resizable: true,
+                    modal: true,
+                    buttons: {
+                        'Tamam': function () {
+                            $(this).dialog('close');
+                        }
+                    }
+                });
+            }
+            else if (password == "" || password == null) {
+                $('<div title="Uyarı"></div>').dialog({
+                    open: function (event, ui) {
+                        $(this).html("Yeni Şifre Alanı Boş Geçilemez");
+                    },
+                    close: function () {
+                        $(this).remove();
+                    },
+                    resizable: true,
+                    modal: true,
+                    buttons: {
+                        'Tamam': function () {
+                            $(this).dialog('close');
+                        }
+                    }
+                });
+
+            }
+            else if (passwordagain == "" || passwordagain == null) {
+                $('<div title="Uyarı"></div>').dialog({
+                    open: function (event, ui) {
+                        $(this).html("Yeni Şifre Tekrar Alanı Boş Geçilemez");
+                    },
+                    close: function () {
+                        $(this).remove();
+                    },
+                    resizable: true,
+                    modal: true,
+                    buttons: {
+                        'Tamam': function () {
+                            $(this).dialog('close');
+                        }
+                    }
+                });
+
+            }
+            else if (password != passwordagain) {
+                $('<div title="Uyarı"></div>').dialog({
+                    open: function (event, ui) {
+                        $(this).html("Girilen Şifreler Birbiri İle Eşleşmemektedir.");
+                    },
+                    close: function () {
+                        $(this).remove();
+                    },
+                    resizable: true,
+                    modal: true,
+                    buttons: {
+                        'Tamam': function () {
+                            $(this).dialog('close');
+                        }
+                    }
+                });
+            }
+            else {
+                $.ajax({
+                    type: "GET",
+                    url: "/Login/PasswodrChange",
+                    data: { "ecode": ecode, "passwordagain": passwordagain },
+                    success: function (responce) {
+                        if (responce == "1") {
+                            $('<div title="Uyarı"></div>').dialog({
+                                open: function (event, ui) {
+                                    $(this).html("Şifre Değiştirme İşlemi Başarılı Bir Şekilde Yapıldı.");
+                                },
+                                close: function () {
+                                    $(this).remove();
+                                },
+                                resizable: true,
+                                modal: true,
+                                buttons: {
+                                    'Tamam': function () {
+                                        $(this).dialog('close');
+                                        window.location.href = '@Url.Action("Index","Login")';
+                                    }
+                                }
+                            });
+                        }
+                        else if (responce == "0") {
+                            $('<div title="Uyarı"></div>').dialog({
+                                open: function (event, ui) {
+                                    $(this).html("Şifre Değiştirme İşlemi Başarısız.");
+                                },
+                                close: function () {
+                                    $(this).remove();
+                                },
+                                resizable: true,
+                                modal: true,
+                                buttons: {
+                                    'Tamam': function () {
+                                        $(this).dialog('close');
+                                        window.location.reload(false);
+                                    }
+                                }
+                            });
+                        }
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
+

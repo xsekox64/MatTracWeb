@@ -1,0 +1,350 @@
+﻿
+@{
+    ViewBag.Title = "Invoice";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<link href="~/Content/build/css/jquery-ui.css" rel="stylesheet" />
+<script src="~/Content/jqueryDatatables/js/jquery.min.js"></script>
+<script src="~/Content/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
+<script src="~/Content/build/js/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.26.0/moment.min.js"></script>
+<script src="https://cdn.datatables.net/plug-ins/1.10.21/dataRender/datetime.js"></script>
+
+
+@using MatTracWeb.Models
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+
+        <div class="row" >
+            <div class="col-md-12">
+                <div class="x_panel" id="div_print">
+                    <div class="x_title">
+                        <div class="row invoice-info">
+                            <div class="col-sm-6 invoice-header">
+                                <h1 class="text-lg-left">
+                                    <i class="fa fa-globe"></i> Fatura
+                                </h1>
+                            </div>
+                            <div class="col-sm-6 invoice-col">
+                                <h1 class="text-lg-right">
+                                    <small class="pull-right">Tarih: @DateTime.Now</small>
+                                </h1>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content" >
+                        <section class="content invoice">
+                            <div class="row invoice-info">
+                                <div class="col-md-12">
+                                    <div class="x_content">
+                                        <br />
+                                        <div class="col-md-3 col-sm-3">
+                                            <div class="">
+                                                <ul class="to_do">
+                                                    <li>
+                                                        <p>
+
+                                                            <div style="position: relative;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Müşteri Adı Soyadı
+                                                        </p>
+                                                    </li>
+                                                    <li>
+                                                        <p>
+                                                            <div style="position: relative;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Müşteri Cep Telefonu
+                                                        </p>
+                                                    </li>
+                                                    <li>
+                                                        <p>
+                                                            <div style="position: relative;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Müşteri E-Posta Adresi
+                                                        </p>
+                                                    </li>
+                                                    <li>
+                                                        <p>
+                                                            <div style="position: relative;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Müşteri Adresi
+                                                        </p>
+                                                    </li>
+                                                    <li>
+                                                        <p>
+                                                            <div style="position: relative;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Müşteri Vergi No
+                                                        </p>
+                                                    </li>
+                                                    <li>
+                                                        <p>
+                                                            <div style="position: relative;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Vergi Dairesi
+                                                        </p>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-3">
+                                            <div class="">
+                                                <ul class="to_do">
+                                                    <li>
+                                                        <p>
+                                                            <div style="position: relative;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> @ViewBag.services.CustomerName @ViewBag.services.CustomerSurname
+                                                        </p>
+                                                    </li>
+                                                    <li>
+                                                        <p>
+                                                            <div style="position: relative;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> @ViewBag.services.CustomerPhone
+                                                        </p>
+                                                    </li>
+                                                    <li>
+                                                        <p>
+                                                            <div style="position: relative;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> @ViewBag.services.CustomerEmail
+                                                        </p>
+                                                    </li>
+                                                    <li>
+                                                        <p>
+                                                            <div style="position: relative;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> @ViewBag.services.CustomerAddress
+                                                        </p>
+                                                    </li>
+                                                    <li>
+                                                        <p>
+                                                            <div style="position: relative;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> @ViewBag.services.VergiNo
+                                                        </p>
+                                                    </li>
+                                                    <li>
+                                                        <p>
+                                                            <div style="position: relative;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> @ViewBag.services.VergiDairesi
+                                                        </p>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="vr"></div>
+                                        <div class="col-md-3 col-sm-3">
+                                            <div class="">
+                                                <ul class="to_do">
+                                                    <li>
+                                                        <p>
+                                                            <div style="position: relative;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Araç Marka
+                                                        </p>
+                                                    </li>
+                                                    <li>
+                                                        <p>
+                                                            <div style="position: relative;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Araç Model
+                                                        </p>
+                                                    </li>
+                                                    <li>
+                                                        <p>
+                                                            <div style="position: relative;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Araç Model Yılı
+                                                        </p>
+                                                    </li>
+                                                    <li>
+                                                        <p>
+                                                            <div style="position: relative;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Araç Kilometresi
+                                                        </p>
+                                                    </li>
+                                                    <li>
+                                                        <p>
+                                                            <div style="position: relative;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Araç Plakası
+                                                        </p>
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-3">
+                                            <div class="">
+                                                <ul class="to_do">
+                                                    <li>
+                                                        <p>
+                                                            <div style="position: relative;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> @ViewBag.services.Marka
+                                                        </p>
+                                                    </li>
+                                                    <li>
+                                                        <p>
+                                                            <div style="position: relative;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> @ViewBag.services.Model
+                                                        </p>
+                                                    </li>
+                                                    <li>
+                                                        <p>
+                                                            <div style="position: relative;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> @ViewBag.services.ModelYear
+                                                        </p>
+                                                    </li>
+                                                    <li>
+                                                        <p>
+                                                            <div style="position: relative;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> @ViewBag.services.Kilometer
+                                                        </p>
+                                                    </li>
+                                                    <li>
+                                                        <p>
+                                                            <div style="position: relative;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> @ViewBag.services.Plaka
+
+                                                        </p>
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row invoice-info">
+                                <div class="col-sm-4 invoice-col">
+                                    Firma
+                                    <address>
+                                        <strong>@((Session["UsersReadDto.SessionUserInfo"] as UsersReadDto).CompanyName)</strong>
+                                        <br>@((Session["UsersReadDto.SessionUserInfo"] as UsersReadDto).CompanyAdress)                                      
+                                        <br>Cep Telefonu: @((Session["UsersReadDto.SessionUserInfo"] as UsersReadDto).Phone)
+                                        <br>E-Posta: @((Session["UsersReadDto.SessionUserInfo"] as UsersReadDto).Email)
+                                    </address>
+                                </div>
+                                <div class="col-sm-4 invoice-col">
+                                    Müşteri
+                                    <address>
+                                        <strong>@ViewBag.services.CustomerName @ViewBag.services.CustomerSurname</strong>
+                                        <br>@ViewBag.services.CustomerAddress                                        
+                                        <br>Cep Telefonu: @ViewBag.services.CustomerPhone
+                                        <br>E-Posta: @ViewBag.services.CustomerEmail
+                                    </address>
+                                </div>
+                                <div class="col-sm-4 invoice-col">
+                                    <b>Fatura #007612</b>
+                                    <br>
+                                    <br>
+                                    <b>Servis ID:</b> 4F3S8J
+                                    <br>
+                                    <b>Ödeme Tarihi:</b> 08.04.2023
+                                    <br>
+                                    <b>Hesap:</b> 968-34567
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="table">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Adet/Miktar</th>
+                                                <th>Tarih</th>
+                                                <th style="width: 59%">Yapılan İşlem</th>
+                                                <th>İşçilik</th>
+                                                <th>Ara Toplam</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tableInvoice">
+                                           
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p class="lead">Ödeme Yöntemleri:</p>
+                                    <img src="~/Content/images/visa.png" />
+                                    <img src="~/Content/images/mastercard.png" alt="Mastercard">
+                                    <img src="~/Content/images/american-express.png" alt="American Express">
+                                    <img src="~/Content/images/paypal.png" alt="Paypal">
+                                    <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+                                    </p>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <th style="width:50%">Ara Toplam:</th>
+                                                    <td>$250.30</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>KDV (18%)</th>
+                                                    <td>$10.34</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>İşçilik:</th>
+                                                    <td>$5.80</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Toplam:</th>
+                                                    <td>$265.24</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                        </section>
+                    </div>
+                </div>
+                <div>
+                    <div class="">
+                        <button class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Kaydet</button>
+                        <button class="btn btn-primary pull-right" onClick="printdiv('div_print');" ><i class="fa fa-print"></i> Yazdır</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+      
+    </div>
+</div>
+<input type="hidden" value="@ViewBag.services.CustomerCarsId" id="customerCarId" />
+<input type="hidden" value="@ViewBag.services.CustomerId" id="customerId" />
+
+
+<script>
+    function DateTimeConvert(value) {
+        return moment(value).format('DD/MM/YYYY HH:mm');
+    }
+    function printdiv(printpage) {
+        var headstr = "<html><head><title></title></head><body>";
+        var footstr = "</body>";
+        var newstr = document.all.item(printpage).innerHTML;
+        var oldstr = document.body.innerHTML;
+        document.body.innerHTML = headstr + newstr + footstr;
+        window.print();
+        document.body.innerHTML = oldstr;
+        return false;
+    }
+    $(function () {
+        debugger;
+        const urlSearchParams = new URLSearchParams(window.location.search);
+        const customerCarsId = urlSearchParams.get('CustomerCarsId');
+        const Id = urlSearchParams.get('Id');
+        $.ajax({
+            url: '@Url.Action("InvoiceListTempRes", "Services")',
+            type: "GET",
+            data: { "Id": Id },
+            success: function (data) {
+                debugger;
+                document.querySelector('#tableInvoice').innerHTML = "";
+                let html = "";
+                var jsonParse = JSON.parse(data[0].tags_1);
+                var tarihInvoice = DateTimeConvert(data[0].AddDateTime);
+                jsonParse.CustomerRequest.forEach((item, index, array) => {
+                    html += `
+                         <tr>
+                                            <td>1</td>
+                                              <td>${tarihInvoice}</td>
+                                              <td>${item.name}</td>
+                                             <td>İşçilik</td>
+                                            <td>Ara Toplam</td>
+                                        </tr>
+                        `;
+                });
+                jsonParse.CustomerResponce.forEach((item, index, array) => {
+                    html += `
+                         <tr>
+                                            <td>1</td>
+                                              <td>${tarihInvoice}</td>
+                                              <td>${item.name}</td>
+                                              <td>İşçilik</td>
+                                            <td>Ara Toplam</td>
+                                        </tr>
+                        `;
+                });
+                document.querySelector('#tableInvoice').innerHTML = html;
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    });
+   
+</script>

@@ -1,0 +1,674 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/jqueryDatatables/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/Content/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="~/Content/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+<link href="~/Content/vendors/nprogress/nprogress.css" rel="stylesheet">
+<link href="~/Content/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+<link href="~/Content/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+<link href="~/Content/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+<link href="~/Content/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+<link href="~/Content/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+<link href="~/Content/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+
+<link href="~/Content/build/css/custom.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+<script src="~/Content/jqueryDatatables/js/jquery.min.js"></script>
+<script src="~/Content/jqueryDatatables/js/jquery.dataTables.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.26.0/moment.min.js"></script>
+<script src="https://cdn.datatables.net/plug-ins/1.10.21/dataRender/datetime.js"></script>
+<link href="~/Content/build/css/jquery-ui.css" rel="stylesheet" />
+<script src="~/Content/build/js/jquery-ui.js"></script>
+<script src="~/Content/build/js/jquery-input-mask-phone-number.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.js"></script>
+<script>
+
+    $(document).ready(function () {
+        $("#demoGrid").DataTable({
+            "processing": true,
+            "serverSide": true,
+            "filter": true,
+            "orderMulti": false,
+            "pageLength": 10,
+
+            "ajax": {
+                "url": "/Arac/AracListTemp",
+                "type": "POST",
+                "datatype": "json"
+            },
+
+            "columnDefs":
+            [{
+                "targets": [0],
+                "visible": false,
+                "searchable": false
+            },
+            {
+                "targets": [1],
+                "visible": false,
+                "searchable": false
+            },
+            {
+                "targets": [7],
+                "searchable": false,
+                "orderable": false
+            },
+            {
+                "targets": [8],
+                "searchable": false,
+                "orderable": false
+            },
+            {
+                "targets": [9],
+                "searchable": false,
+                "orderable": false
+            }],
+
+            "columns": [
+                  { "data": "CustomerId", "name": "CustomerId", "autoWidth": true },
+                  { "data": "CustomerCarsId", "name": "CustomerCarsId", "autoWidth": true },
+                   { "data": "Plaka", "name": "Plaka", "autoWidth": true },
+                  { "data": "CustomerTcNo", "name": "CustomerTcNo", "autoWidth": true },
+                  { "data": "CustomerName", "name": "CustomerName", "autoWidth": true },
+                  { "data": "CustomerSurname", "name": "CustomerSurname", "autoWidth": true },
+                  { "data": "AracCinsiAdi", "name": "AracCinsiAdi", "autoWidth": true },
+                  { "data": "YakitTuruAdi", "name": "YakitTuruAdi", "autoWidth": true },
+                  { "data": "Marka", "name": "Marka", "autoWidth": true },
+                   { "data": "Model", "name": "Model", "autoWidth": true },
+                    { "data": "ModelYear", "name": "ModelYear", "autoWidth": true },
+                  { "data": "Kilometer", "name": "Kilometer", "autoWidth": true },
+                   {
+                       "render": function (data, type, full, meta)
+                       {
+                           debugger;
+                           return '<a class="btn btn-success" style="display: block; text-align: center; margin: auto; width: auto" href="/Services/Index?customerCarsId=' + full.CustomerCarsId + '" >Servis Formu</a>';
+                       }
+                   },
+
+                 {
+                     "render": function (data, type, row, meta)
+                     { return '<a class="btn btn-info"  style="display: block; text-align: center; margin: auto; width: auto" href="/Services/ServiseHistory?customerCarsId=' + row.CustomerCarsId + '" >Geçmiş Kayıtlar</a>'; }
+                 },
+                 //{
+                 //    "render": function (data, type, row, meta)
+                 //    { return '<a class="btn btn-dark" style="display: block; text-align: center; margin: auto; width: auto"  href="/Services/Rapor?customerCarsId=' + row.CustomerCarsId + '" >Rapor</a>'; }
+                 //}
+            ]
+
+        });
+        $('#Phone').usPhoneFormat({
+            format: '(xxx) xxx-xxxx',
+        });
+    });
+    function NewCarAdd(CustomerId) {
+        $('#fc_create').click();
+        var CustomerId = $("#customerIdInputCar").val(CustomerId);
+    }
+
+
+
+    function CustomerEdit(CustomerId, CustomerTcNo, CustomerName, CustomerSurname, CustomerPhone, CustomerEmail, CustomerAddress, VergiNo, VergiDairesi) {
+        $('#fc_edit').click();
+        var CustomerId = $("#customerIdInput").val(CustomerId);
+        var CustomerTcNo = $("#tcno").val(CustomerTcNo);
+        var CustomerName = $("#UserName").val(CustomerName);
+        var CustomerSurname = $("#UserSurname").val(CustomerSurname);
+        var CustomerPhone = $("#Phone").val(CustomerPhone);
+        var CustomerEmail = $("#Email").val(CustomerEmail);
+        var CustomerAddress = $("#adres").val(CustomerAddress);
+        var VergiNo = $("#vergino").val(VergiNo);
+        var VergiDairesi = $("#vergidaire").val(VergiDairesi);
+
+    }
+
+    function sedeceSayi(evt) {
+        evt = (evt) ? evt : window.event
+        var charCode = (evt.which) ? evt.which : evt.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false
+        }
+        return true
+    }
+</script>
+
+
+<div id="fc_create" data-toggle="modal" data-target="#CustomerModalNew"></div>
+<div id="fc_edit" data-toggle="modal" data-target="#CustomerModalEdit"></div>
+<div id="CustomerModalNew" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header" style="justify-content:left;">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="margin: 0;background-color: #73879C;border-radius: 30.5px;height: 42px !important;line-height: 0.3;">×</button>
+                <h4 class="modal-title" id="myModalLabel" style="line-height: 1.5; margin-left: 10px;">Müşteri Aracı Ekle</h4>
+            </div>
+            <div class="modal-body">
+                <div id="testmodal" style="padding: 5px 20px;">
+                    <div id="antoform" class="form-horizontal calender" role="form">
+                        <div class="x_content">
+                            <br />
+                            <div class="form-horizontal form-label-left">
+                                <input type="hidden" id="customerIdInputCar" />
+                                <div class="form-group row">
+                                    <label class="control-label col-md-3 col-sm-3 ">Marka<span class="required">*</span></label>
+                                    <div class="col-md-9 col-sm-9 ">
+                                        <input type="text" class="form-control" name="txtMarka" id="txtMarka" placeholder="Marka">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="control-label col-md-3 col-sm-3">Model<span class="required">*</span></label>
+                                    <div class="col-md-9 col-sm-9 ">
+                                        <input type="text" class="form-control" name="txtModel" id="txtModel" placeholder="Model">
+                                    </div>
+                                </div>
+                                <div class="form-group row ">
+                                    <label class="control-label col-md-3 col-sm-3 ">Model Yılı<span class="required">*</span></label>
+                                    <div class="col-md-9 col-sm-9 ">
+                                        <input type="text" class="form-control" name="txtModelYili" id="txtModelYili" placeholder="Model Yılı" MaxLength="4" onKeyPress="return sedeceSayi(event)">
+                                    </div>
+                                </div>
+                                <div class="form-group row ">
+                                    <label class="control-label col-md-3 col-sm-3 ">Kilometresi<span class="required">*</span></label>
+                                    <div class="col-md-9 col-sm-9 ">
+                                        <input type="text" name="txtkilometer" id="txtkilometer" class="form-control" placeholder="Kilometresi">
+                                    </div>
+                                </div>
+                                <script>
+                                    txtkilometer.addEventListener("change", function () {
+                                        commify(event.target.value)
+                                    })
+                                    function commify(value) {
+                                        var checkedNew = value.split('.').join("");
+                                        var parts = checkedNew.toString().split(".");
+                                        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                                        $("#txtkilometer").val(parts.join("."))
+                                    }
+                                </script>
+                                <div class="form-group row ">
+                                    <label class="control-label col-md-3 col-sm-3 ">Plaka<span class="required">*</span></label>
+                                    <div class="col-md-9 col-sm-9 ">
+                                        <input type="text" name="txtPlaka" id="txtPlaka" class="form-control" placeholder="Plaka">
+                                    </div>
+                                </div>
+                                <p id="plakaHata" style="margin-left: 25px; margin-right: 25px; text-align: center;color: darkorange"></p>
+                                <script>
+                                    txtPlaka.addEventListener("change", function () {
+                                        plate(event.target.value)
+                                    })
+                                    function plate(value) {
+                                        var regex, v;
+                                        v = value.replace(/\s+/g, '').toUpperCase();
+                                        regex = (/([0-9]{2}|[01]{2})([a-z|A-Z]{1}|[a-z|A-Z]{2,3})([0-9]{3,5})/);
+                                        var res = v.match(regex);
+                                        if (res != null) {
+                                            var resEnd = res[1] + " " + res[2] + " " + res[3]
+                                            $("#txtPlaka").val(resEnd);
+                                            document.getElementById("plakaHata").innerHTML = "";
+                                        }
+                                        else {
+                                            text = "Plaka Formatı Uygun Değil Düzeltin veya Sistem Yöneticinizle Görüşün !!!";
+                                            document.getElementById("plakaHata").innerHTML = text;
+                                        }
+                                    }
+
+                                </script>
+                                <div class="form-group row ">
+                                    <label class="control-label col-md-3 col-sm-3 ">Şasi No<span class="required">*</span></label>
+                                    <div class="col-md-9 col-sm-9 ">
+                                        <input type="text" name="txtSasiNo" id="txtSasiNo" class="form-control" placeholder="Şasi No">
+                                    </div>
+                                </div>
+                                <div class="form-group row ">
+                                    <label class="control-label col-md-3 col-sm-3 ">Motor No<span class="required">*</span></label>
+                                    <div class="col-md-9 col-sm-9 ">
+                                        <input type="text" name="txtMotorNo" id="txtMotorNo" class="form-control" placeholder="Motor No">
+                                    </div>
+                                </div>
+                                <div class="form-group row ">
+                                    <label class="control-label col-md-3 col-sm-3 ">Yakıt Türü<span class="required">*</span></label>
+                                    <div class="col-md-9 col-sm-9 ">
+                                        <select class="form-control" id="yakitTuru">
+                                            <option value="0">Yakıt Türünü Seçiniz</option>
+                                            <option value="1">Benzin</option>
+                                            <option value="2">Dizel</option>
+                                            <option value="3">LPG</option>
+                                            <option value="4">Hibrit</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row ">
+                                    <label class="control-label col-md-3 col-sm-3 ">Araç Cinsi<span class="required">*</span></label>
+                                    <div class="col-md-9 col-sm-9 ">
+                                        <select class="form-control" id="aracCinsi">
+                                            <option value="0">Araç Cinsini Seçiniz</option>
+                                            <option value="1">Otomobil</option>
+                                            <option value="2">Taksi/Dolmuş</option>
+                                            <option value="3">Minibüs</option>
+                                            <option value="4">Otobüs</option>
+                                            <option value="5">Kamyonet</option>
+                                            <option value="6">Kamyon</option>
+                                            <option value="7">Çekici</option>
+                                            <option value="8">Arazi Taşıtı</option>
+                                            <option value="9">Motorsiklet</option>
+                                            <option value="10">İş Makinası</option>
+                                            <option value="11">Özel Amaçlı Taşıt</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <p id="generalCarError" style="margin-left: 25px; margin-right: 25px; text-align: center;color: darkorange"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning antoclose" data-dismiss="modal">Kapat</button>
+                <button type="button" class="btn btn-primary antosubmit" id="btnkaydet">Kaydet</button>
+            </div>
+            <script>
+                $("#btnkaydet").click(function (e) {
+                    e.preventDefault();
+                    CustomerId = $("#customerIdInputCar").val();
+                    marka = $("#txtMarka").val();
+                    model = $("#txtModel").val();
+                    modelYili = $("#txtModelYili").val();
+                    kilometer = $("#txtkilometer").val();
+                    plaka = $("#txtPlaka").val();
+                    sasino = $("#txtSasiNo").val();
+                    motorno = $("#txtMotorNo").val();
+                    yakitturu = $("#yakitTuru").val();
+                    araccinsi = $("#aracCinsi").val();
+                    if (marka == null || marka == "")
+                    {
+                        document.getElementById("generalCarError").innerHTML = "Marka Alanı Boş Geçilemez !!!";
+                    }
+                    else if (model == null || model == "")
+                    {
+                        document.getElementById("generalCarError").innerHTML = "Model Alanı Boş Geçilemez !!!";
+                    }
+                    else if (modelYili == null || modelYili == "") {
+                        document.getElementById("generalCarError").innerHTML = "Model Yılı Alanı Boş Geçilemez !!!";
+                    }
+                    else if (kilometer == null || kilometer == "") {
+                        document.getElementById("generalCarError").innerHTML = "Kilometre Alanı Boş Geçilemez !!!";
+                    }
+                    else if (plaka == null || plaka == "") {
+                        document.getElementById("generalCarError").innerHTML = "Plaka Alanı Boş Geçilemez !!!";
+                    }
+                    else if (sasino == null || sasino == "") {
+                        document.getElementById("generalCarError").innerHTML = "Şasi No Alanı Boş Geçilemez !!!";
+                    }
+                    else if (motorno == null || motorno == "") {
+                        document.getElementById("generalCarError").innerHTML = "Motor No Alanı Boş Geçilemez !!!";
+                    }
+                    else if (yakitturu == "0") {
+                        document.getElementById("generalCarError").innerHTML = "Yakıt Türü Alanı Boş Geçilemez !!!";
+                    }
+                    else if (araccinsi == "0") {
+                        document.getElementById("generalCarError").innerHTML = "Araç Cinsi Alanı Boş Geçilemez !!!";
+                    }
+                    else {
+                        var myData = {
+                            CustomerId: CustomerId,
+                            Marka: marka,
+                            Model: model,
+                            ModelYear: modelYili,
+                            Kilometer: kilometer,
+                            Plaka: plaka,
+                            SasiNo: sasino,
+                            MotorNo: motorno,
+                            YakitTuru: yakitturu,
+                            AracCinsi: araccinsi
+
+                        };
+                        $.ajax({
+                            url: '@Url.Action("CustomerCarSave", "Customer")',
+                            type: "GET",
+                            data: myData,
+                            success: function (data) {
+                                $('#CustomerModalNew').modal('hide');
+                                if (data == "1") {
+                                    $('<div title="Kaydetme İşlemi"></div>').dialog({
+                                        open: function (event, ui) {
+                                            $(this).html("Kaydetme Başarılı");
+                                        },
+                                        close: function () {
+                                            $(this).remove();
+                                        },
+                                        resizable: true,
+                                        modal: true,
+                                        buttons: {
+                                            'Tamam': function () {
+                                                $(this).dialog('close');
+                                                window.location.reload(false);
+                                            }
+                                        }
+                                    });
+                                }
+                                else if (data == "2") {
+                                    $('<div title="Kaydetme İşlemi"></div>').dialog({
+                                        open: function (event, ui) {
+                                            $(this).html("Müşteri Adı Boş Geçilemez");
+                                        },
+                                        close: function () {
+                                            $(this).remove();
+                                        },
+                                        resizable: true,
+                                        modal: true,
+                                        buttons: {
+                                            'Tamam': function () {
+                                                $(this).dialog('close');
+                                                window.location.reload(false);
+                                            }
+                                        }
+                                    });
+                                }
+                                else {
+                                    $('<div title="Kaydetme İşlemi"></div>').dialog({
+                                        open: function (event, ui) {
+                                            $(this).html("Kaydetme Başarısız");
+                                        },
+                                        close: function () {
+                                            $(this).remove();
+                                        },
+                                        resizable: true,
+                                        modal: true,
+                                        buttons: {
+                                            'Tamam': function () {
+                                                $(this).dialog('close');
+                                                window.location.reload(false);
+                                            }
+                                        }
+                                    });
+                                }
+                            },
+                            error: function (err) {
+                                $('#CustomerModalNew').modal('hide');
+                                $('<div title="Hata"></div>').dialog({
+                                    open: function (event, ui) {
+                                        $(this).html("Hata Oluştu");
+                                    },
+                                    close: function () {
+                                        $(this).remove();
+                                    },
+                                    resizable: true,
+                                    modal: true,
+                                    buttons: {
+                                        'Tamam': function () {
+                                            $(this).dialog('close');
+                                            window.location.reload(false);
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+            </script>
+        </div>
+    </div>
+</div>
+<div id="CustomerModalEdit" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="justify-content:left;">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="margin: 0;background-color: #73879C;border-radius: 30.5px;height: 42px !important;line-height: 0.3;">×</button>
+                <h4 class="modal-title" id="myModalLabel" style="line-height: 1.5; margin-left: 10px;">Müşteri Bilgilerini Güncelle</h4>
+            </div>
+            <div class="modal-body">
+
+                <div id="testmodal2" style="padding: 5px 20px;">
+                    <div id="antoform2" class="form-horizontal calender" role="form">
+                        <div class="x_content">
+                            <br />
+                            <div class="form-horizontal form-label-left">
+                                <input type="hidden" id="customerIdInput" />
+                                <div class="form-group row">
+                                    <label class="control-label col-md-3 col-sm-3 ">T.C. No<span class="required">*</span></label>
+                                    <div class="col-md-9 col-sm-9 ">
+                                        <input type="text" class="form-control" name="tcno" id="tcno" title="T.C. No" placeholder="T.C. No">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="control-label col-md-3 col-sm-3 ">Adı<span class="required">*</span></label>
+                                    <div class="col-md-9 col-sm-9 ">
+                                        <input type="text" class="form-control" name="UserName" id="UserName" title="Adı" placeholder="Adı">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="control-label col-md-3 col-sm-3">Soyadı<span class="required">*</span></label>
+                                    <div class="col-md-9 col-sm-9 ">
+                                        <input type="text" class="form-control" name="UserSurname" id="UserSurname" placeholder="Soyadı">
+                                    </div>
+                                </div>
+                                <div class="form-group row ">
+                                    <label class="control-label col-md-3 col-sm-3 ">Cep Telefonu<span class="required">*</span></label>
+                                    <div class="col-md-9 col-sm-9 ">
+                                        <input type="text" name="Phone" id="Phone" class="form-control" maxlength="14" placeholder="Cep Telefonu">
+                                    </div>
+                                </div>
+                                <div class="form-group row ">
+                                    <label class="control-label col-md-3 col-sm-3 ">E-Posta<span class="required">*</span></label>
+                                    <div class="col-md-9 col-sm-9 ">
+                                        <input type="text" class="form-control" name="Email" id="Email" placeholder="E-Posta">
+                                    </div>
+                                </div>
+                                <p id="emailHata" style="margin-left: 25px; margin-right: 25px; text-align: center;color: darkorange"></p>
+                                <script>
+                                    Email.addEventListener("change", function () {
+                                        emailCtrl(event.target.value)
+                                    })
+                                    function emailCtrl(value) {
+                                        debugger;
+                                        var emailFilter = /^([\w-]+(?:\.[\w-]+)*)@@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+                                        if (!emailFilter.test(value)) {
+                                            text = "E-Posta Formatı Hatalı Lütfen Düzeltin !!!";
+                                            document.getElementById("emailHata").innerHTML = text;
+                                        }
+                                        else {
+                                            document.getElementById("emailHata").innerHTML = "";
+                                        }
+                                    }
+
+                                </script>
+                                <div class="form-group row ">
+                                    <label class="control-label col-md-3 col-sm-3 ">Adres<span class="required">*</span></label>
+                                    <div class="col-md-9 col-sm-9 ">
+                                        <input type="text" name="adres" id="adres" class="form-control" placeholder="Adres">
+                                    </div>
+                                </div>
+                                <div class="form-group row ">
+                                    <label class="control-label col-md-3 col-sm-3 ">Vergi No<span class="required">*</span></label>
+                                    <div class="col-md-9 col-sm-9 ">
+                                        <input type="text" name="vergino" id="vergino" class="form-control" placeholder="Vergi No">
+                                    </div>
+                                </div>
+                                <div class="form-group row ">
+                                    <label class="control-label col-md-3 col-sm-3 ">Vergi Dairesi<span class="required">*</span></label>
+                                    <div class="col-md-9 col-sm-9 ">
+                                        <input type="text" name="vergidaire" id="vergidaire" class="form-control" placeholder="Vergi Dairesi">
+                                    </div>
+                                </div>
+                                <p id="generalError" style="margin-left: 25px; margin-right: 25px; text-align: center;color: darkorange"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning antoclose2" data-dismiss="modal">Kapat</button>
+                <button type="button" class="btn btn-primary antoclose2" id="btnguncelle">Güncelle</button>
+            </div>
+            <script>
+                $("#btnguncelle").click(function (e) {
+                    e.preventDefault();
+                    CustomerId = $("#customerIdInput").val();
+                    CustomerTcNo = $("#tcno").val();
+                    CustomerName = $("#UserName").val();
+                    CustomerSurname = $("#UserSurname").val();
+                    CustomerPhone = $("#Phone").val();
+                    CustomerEmail = $("#Email").val();
+                    CustomerAddress = $("#adres").val();
+                    VergiNo = $("#vergino").val();
+                    VergiDairesi = $("#vergidaire").val();
+                    if (CustomerTcNo == null || CustomerTcNo == "")
+                    {
+                        document.getElementById("generalError").innerHTML = "T.C. No Alanı Boş Geçilemez !!!";
+                    }
+                    else if (CustomerName == null || CustomerName == "")
+                    {
+                        document.getElementById("generalError").innerHTML = "Adı Alanı Boş Geçilemez !!!";
+                    }
+                    else if (CustomerSurname == null || CustomerSurname == "") {
+                        document.getElementById("generalError").innerHTML = "Soyadı Alanı Boş Geçilemez !!!";
+                    }
+                    else if (CustomerPhone == null || CustomerPhone == "") {
+                        document.getElementById("generalError").innerHTML = "Cep Telefonu Alanı Boş Geçilemez !!!";
+                    }
+                    else if (CustomerEmail == null || CustomerEmail == "") {
+                        document.getElementById("generalError").innerHTML = "E-Posta Alanı Boş Geçilemez !!!";
+                    }
+                    else if (CustomerAddress == null || CustomerAddress == "") {
+                        document.getElementById("generalError").innerHTML = "Adres Alanı Boş Geçilemez !!!";
+                    }
+                    else if (VergiNo == null || VergiNo == "") {
+                        document.getElementById("generalError").innerHTML = "Vergi No Alanı Boş Geçilemez !!!";
+                    }
+                    else if (VergiDairesi == null || VergiDairesi == "") {
+                        document.getElementById("generalError").innerHTML = "Vergi Dairesi Alanı Boş Geçilemez !!!";
+                    }
+                    else {
+                        var myData = {
+                            CustomerId: CustomerId,
+                            CustomerTcNo: CustomerTcNo,
+                            CustomerName: CustomerName,
+                            CustomerSurname: CustomerSurname,
+                            CustomerPhone: CustomerPhone,
+                            CustomerEmail: CustomerEmail,
+                            CustomerAddress: CustomerAddress,
+                            VergiNo: VergiNo,
+                            VergiDairesi: VergiDairesi
+                        };
+                        $.ajax({
+                            type: "GET",
+                            url: "/Customer/CustomerUpdate",
+                            data: myData,
+                            success: function (data) {
+                                $('#CustomerModalEdit').modal('hide');
+                                if (data == "1") {
+                                    $('<div title="Güncelleme İşlemi"></div>').dialog({
+                                        open: function (event, ui) {
+                                            $(this).html("Güncelleme Başarılı");
+                                        },
+                                        close: function () {
+                                            $(this).remove();
+                                        },
+                                        resizable: true,
+                                        modal: true,
+                                        buttons: {
+                                            'Tamam': function () {
+                                                $(this).dialog('close');
+                                                window.location.reload(false);
+                                            }
+                                        }
+                                    });
+                                }
+                                else {
+                                    $('<div title="Güncelleme İşlemi"></div>').dialog({
+                                        open: function (event, ui) {
+                                            $(this).html("Güncelleme Başarısız");
+                                        },
+                                        close: function () {
+                                            $(this).remove();
+                                        },
+                                        resizable: true,
+                                        modal: true,
+                                        buttons: {
+                                            'Tamam': function () {
+                                                $(this).dialog('close');
+                                                window.location.reload(false);
+                                            }
+                                        }
+                                    });
+                                }
+                            },
+                            error: function (err) {
+                                $('#CustomerModalEdit').modal('hide');
+                                $('<div title="Hata"></div>').dialog({
+                                    open: function (event, ui) {
+                                        $(this).html("Hata Oluştu");
+                                    },
+                                    close: function () {
+                                        $(this).remove();
+                                    },
+                                    resizable: true,
+                                    modal: true,
+                                    buttons: {
+                                        'Tamam': function () {
+                                            $(this).dialog('close');
+                                            window.location.reload(false);
+                                        }
+                                    }
+                                });
+                            }
+
+                        });
+                    }
+
+                });
+            </script>
+        </div>
+    </div>
+</div>
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 ">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Araç Listesi <small>Düzenleme Form</small></h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="card-box table-responsive">
+                                    <table id="demoGrid" class="table table-striped table-bordered dt-responsive" style="width: 100%;" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>CustomerId</th>
+                                                <th>CustomerCarsId</th>
+                                                <th style="width: 8%;">Plaka</th>
+                                                <th style="width: 6%;">Müşteri T.C. No</th>
+                                                <th style="width: 8%;">Müşteri Adı</th>
+                                                <th style="width: 6%;">Müşteri Soyadı</th>
+                                                <th style="width: 6%;">Araç Tipi</th>
+                                                <th style="width: 5%;">Yakıt Tipi</th>
+                                                <th style="width: 8%;">Marka</th>
+                                                <th style="width: 6%;">Model</th>
+                                                <th style="width: 4%;">Model Yılı</th>
+                                                <th style="width: 4%;">Kilometre</th>
+                                                <th style="width: 10%;">Servis Formu</th>
+                                                <th style="width: 6%;">Düzenle</th>
+                                                @*<th style="width: 6%;">Rapor</th>*@
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

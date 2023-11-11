@@ -1,0 +1,390 @@
+﻿
+@{
+    ViewBag.Title = "Calander";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/js/jquery.min.js"></script>
+<link href="~/Content/vendors/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet">
+<link href="~/Content/vendors/fullcalendar/dist/fullcalendar.print.css" rel="stylesheet" media="print">
+<script src="~/Content/vendors/fullcalendar/3.9/lib/moment.min.js"></script>
+<script src="~/Content/vendors/fullcalendar/3.9/fullcalendar.min.js"></script>
+<script src="~/Content/vendors/fullcalendar/3.9/locale/tr.js"></script>
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>Takvim/Ajanda<small></small></h3>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Takvim/Ajanda Etkinlikleri <small>Oturumlar</small></h2>
+
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+
+                        <div id='calendar'></div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="CalenderModalNew" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header"  style="justify-content:left;">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="margin: 0;background-color: #73879C;border-radius: 30.5px;height: 42px !important;line-height: 0.5;">×</button>
+                <h4 class="modal-title" id="myModalLabel" style="line-height: 1.8; margin-left: 10px;">Yeni Etkilnlik Girişi</h4>
+            </div>
+            <div class="modal-body">
+                <div id="testmodal" style="padding: 5px 20px;">
+                    <div id="antoform" class="form-horizontal calender" role="form">  
+                        <div class="form-group row ">
+                            <label class="control-label col-md-3 col-sm-3 ">Saat<span class="required">*</span></label>
+                            <div class="col-md-9 col-sm-9 ">
+                                <input class="form-control" type="time" name="timeHour" id="timeHour" required="required">
+                            </div>
+                        </div>   
+                        <div class="form-group row ">
+                            <label class="control-label col-md-3 col-sm-3 ">Konu<span class="required">*</span></label>
+                            <div class="col-md-9 col-sm-9 ">
+                                <input class="form-control" type="text" name="title" id="title" required="required">
+                            </div>
+                        </div>                     
+                        <div class="form-group row ">
+                            <label class="control-label col-md-3 col-sm-3 ">Görüşme Türü<span class="required">*</span></label>
+                            <div class="col-md-9 col-sm-9 ">
+                                <select class="form-control" id="interviewType" name="interviewType" style="height: 2.13em;">
+                                    <option>Randevu</option>
+                                    <option>Toplantı</option>
+                                    <option>Görüşme</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label class="control-label col-md-3 col-sm-3 ">Açıklama<span class="required">*</span></label>
+                            <div class="col-md-9 col-sm-9 ">
+                                <textarea class="form-control" style="height:130px;" id="descr" name="descr"  placeholder="Açıklama"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning antoclose" data-dismiss="modal">Kapat</button>
+                <button type="button" class="btn btn-primary antosubmit" id="btnkaydet">Kaydet</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="CalenderModalEdit" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="justify-content:left;">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="margin: 0;background-color: #73879C;border-radius: 30.5px;height: 42px !important;line-height: 0.5;">×</button>
+                <h4 class="modal-title" id="myModalLabel" style="line-height: 1.8; margin-left: 10px;">Etkinlik Girişini Güncelle</h4>
+            </div>
+            <div class="modal-body">
+
+                <div id="testmodal2" style="padding: 5px 20px;">
+                    <div id="antoform2" class="form-horizontal calender" role="form">
+                        <div class="form-group row ">
+                            <label class="control-label col-md-3 col-sm-3 ">Saat<span class="required">*</span></label>
+                            <div class="col-md-9 col-sm-9 ">
+                                <input class="form-control" type="time" name="timeHourUp" id="timeHourUp" required="required">
+                            </div>
+                        </div>
+                        <div class="form-group row ">
+                            <label class="control-label col-md-3 col-sm-3 ">Konu<span class="required">*</span></label>
+                            <div class="col-md-9 col-sm-9 ">
+                                <input class="form-control" type="text" name="titleUp" id="titleUp" required="required">
+                            </div>
+                        </div>  
+                        <div class="form-group row ">
+                            <label class="control-label col-md-3 col-sm-3 ">Görüşme Türü<span class="required">*</span></label>
+                            <div class="col-md-9 col-sm-9 ">                               
+                                <select id="interviewTypeUp" class="form-control select2 oneacordion" name="interviewTypeUp">
+                                </select>
+                            </div>
+                        </div>
+                        <input type="hidden" class="form-control" id="id2" name="id2">
+                        <div class="form-group row">
+                            <label class="control-label col-md-3 col-sm-3 ">Açıklama<span class="required">*</span></label>
+                            <div class="col-md-9 col-sm-9 ">
+                                <textarea class="form-control" style="height:130px;" id="descrUpdate" name="descrUpdate" placeholder="Açıklama"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning antoclose2" data-dismiss="modal">Kapat</button>               
+                <button type="button" class="btn btn-danger " id="btnsil2">Sil</button>
+                <button type="button" class="btn btn-primary" id="btnguncelle">Güncelle</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="fc_create" data-toggle="modal" data-target="#CalenderModalNew"></div>
+<div id="fc_edit" data-toggle="modal" data-target="#CalenderModalEdit"></div>
+<script>
+    $(document).ready(function () {
+        debugger;
+        var JsonModel = '@Html.Raw(Json.Encode(@Model))';
+        var jsonData = JSON.parse(JsonModel);
+        var result = []
+
+
+        for (var i = 0; i < jsonData.Values.length; i++) {
+            var date = new Date(jsonData.Values[i].start);
+            var d2 = date.getDate();
+            var m2 = date.getMonth();
+            var y2 = date.getFullYear();
+
+            var date3 = new Date(jsonData.Values[i].endFin);
+            var d3 = date3.getDate();
+            var m3 = date3.getMonth();
+            var y3 = date3.getFullYear();
+            result.push({ title: jsonData.Values[i].title, start: new Date(y2, m2, d2), end: new Date(y3, m3, d3), id: jsonData.Values[i].CalendarId.toString() })
+
+        }
+
+        if (typeof ($.fn.fullCalendar) === 'undefined') { return; }
+        console.log('init_calendar');
+        var datestar = "";
+        var dateend = "";
+        var date = new Date(),
+            d = date.getDate(),
+            m = date.getMonth(),
+            y = date.getFullYear(),
+            started,
+            categoryClass;
+
+        var calendar = $('#calendar').fullCalendar({
+
+            lang: 'tr',
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay,listMonth'
+            },
+            selectable: true,
+            selectHelper: true,
+            select: function (start, end, allDay) {
+                debugger;
+                $('#fc_create').click();
+
+                started = start;
+                ended = end;
+                datestar = start;
+                dateend = end;
+
+                $(".antosubmit").on("click", function () {
+                    debugger;
+                    var title = $("#title").val();
+                    if (end) {
+                        ended = end;
+                    }
+
+                    categoryClass = $("#event_type").val();
+
+                    if (title) {
+                        calendar.fullCalendar('renderEvent', {
+                            title: title,
+                            start: started,
+                            end: end,
+                            allDay: allDay
+                        },
+                          true
+                        );
+                    }
+
+                    $('#title').val('');
+
+                    calendar.fullCalendar('unselect');
+
+                    $('.antoclose').click();
+
+                    return false;
+                });
+            },
+            eventClick: function (calEvent, jsEvent, view) {
+                debugger;
+                $('#fc_edit').click();
+                $('#title2').val(calEvent.title);
+                $('#id2').val(calEvent.id);
+                decrs(calEvent.id);
+
+                categoryClass = $("#event_type").val();
+
+                $(".antosubmit2").on("click", function () {
+                    debugger;
+                    calEvent.title = $("#title2").val();
+                    calendar.fullCalendar('updateEvent', calEvent);
+                    $('.antoclose2').click();
+                });
+
+                calendar.fullCalendar('unselect');
+            },
+            editable: true,
+            events: result
+
+
+        });
+
+        $("#btnkaydet").click(function () {
+            debugger;
+            var interviewType = $("#interviewType").val();
+            var descr = $("#descr").val();
+            var timeHour = $("#timeHour").val();
+            var title = $("#title").val();
+            var firdate = datestar._d;
+            var secdate = dateend._d;
+            var datefirst = convert(firdate);
+            var datesecond = convert(secdate); 
+            var myData = {
+                interviewType: interviewType,
+                descr: descr,
+                timeHour: timeHour,
+                datefirst: datefirst,
+                datesecond: datesecond,
+                title: title
+            };
+            $.ajax({
+                url: "/Home/YeniEtkinlikEkle",
+                type: "GET",
+                data: myData,
+                success: function (responce) {
+                    if (responce == "1") {
+                        $('<div title="Uyarı"></div>').dialog({
+                            open: function (event, ui) {
+                                $(this).html("Kaydetme İşlemi Başarılı Bir Şekilde Yapıldı.");
+                            },
+                            close: function () {
+                                $(this).remove();
+                            },
+                            resizable: true,
+                            modal: true,
+                            buttons: {
+                                'Tamam': function () {
+                                    $(this).dialog('close');
+                                    window.location.reload(false);
+                                }
+                            }
+                        });
+                    } else {
+                        $('<div title="Uyarı"></div>').dialog({
+                            open: function (event, ui) {
+                                $(this).html("Kaydetme İşlemi Başarısız.");
+                            },
+                            close: function () {
+                                $(this).remove();
+                            },
+                            resizable: true,
+                            modal: true,
+                            buttons: {
+                                'Tamam': function () {
+                                    $(this).dialog('close');
+                                    window.location.reload(false);
+                                }
+                            }
+                        });
+
+                    }
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+            window.location.reload(true);
+        });
+
+        function convert(str) {
+            var date = new Date(str),
+                mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+                day = ("0" + date.getDate()).slice(-2);
+            return [date.getFullYear(), mnth, day].join("-");
+        };
+
+
+
+    });
+
+    function decrs(id) {
+        debugger;
+        $('.oneacordion').empty();       
+        $.ajax({
+            type: "GET",
+            url: "/Home/TakvimAciklamaGetir",
+            data: { "id": id },
+            contentType: "application/json; charset=utf-8",
+            success: function (response) {
+                debugger;
+                $('#descrUpdate').val(response.decsr);
+                $('#titleUp').val(response.title);                
+                $('#timeHourUp').val(response.hour.trim());
+                var intType = response.InterviewType ==  1 ? "Randevu" 
+                             : response.InterviewType == 2 ? "Toplantı" 
+                             : response.InterviewType == 3 ? "Görüşme"  : 0;
+                $('.oneacordion').append('<option selected value=' + response.InterviewType + ' >' + intType + '</option>');
+                $('.oneacordion').append('<option value=1>Randevu</option>');
+                $('.oneacordion').append('<option value=2>Toplantı</option>');
+                $('.oneacordion').append('<option value=3>Görüşme</option>');
+                $('#id2').val(response.CalendarId);
+            },
+            error: function (response) {
+                return response;
+            }
+        });
+    }
+    
+   
+
+</script>
+<script>
+    $("#btnsil2").click(function () {
+        debugger;
+        var idsil = $('#id2').val();
+        $.ajax({
+            url: "/Home/TakvimEtkinlikSil",
+            type: "GET",
+            data: { "idsil": idsil }
+        });
+        window.location.reload(true);
+    });
+    $("#btnguncelle").click(function () {
+        debugger;
+        var CalendarId = $('#id2').val();
+        var interviewType = $("#interviewTypeUp").val();
+        var descr = $("#descrUpdate").val();
+        var timeHour = $("#timeHourUp").val();
+        var title = $("#titleUp").val();
+        var myData = {
+            CalendarId: CalendarId,
+            interviewType: interviewType,
+            decsr: descr,
+            hour: timeHour,
+            title: title
+        };
+        $.ajax({
+            url: "/Home/TakvimiGuncelle",
+            type: "GET",
+            data: myData,
+        });
+        window.location.reload(true);
+    });
+</script>

@@ -1,0 +1,405 @@
+﻿
+@{
+    ViewBag.Title = "CompanySave";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<script src="~/Content/vendors/jquery/dist/jquery.min.js"></script>
+<script src="~/Content/build/js/jquery-input-mask-phone-number.js"></script>
+<link href="~/Content/build/css/jquery-ui.css" rel="stylesheet" />
+<script src="~/Content/build/js/jquery-ui.js"></script>
+
+
+<script src="~/Content/vendors/iCheck/icheck.min.js"></script>
+<script src="~/Content/vendors/select2/dist/js/select2.min.js"></script>
+
+<script src="~/Content/dropsearch/js/countrypicker.js"></script>
+<script src="~/Content/dropsearch/js/bootstrap-select.min.js"></script>
+
+<script src="~/Content/dropsearch/js/console.js"></script>
+<!-- page content -->
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3></h3>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12 ">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>FİRMA EKLE</h2>
+                        <ul class="nav navbar-right panel_toolbox"></ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <br />
+                        <div class="form-horizontal form-label-left">
+                            <div class="form-group row ">
+                                <label class="control-label col-md-3 col-sm-3 ">Firma Adı<span class="required">*</span></label>
+                                <div class="col-md-9 col-sm-9 ">
+                                    <input type="text" class="form-control" name="txtfirmaAdi" id="txtfirmaAdi" placeholder="Firma Adı">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="control-label col-md-3 col-sm-3 ">Firma Adres<span class="required">*</span></label>
+                                <div class="col-md-9 col-sm-9 ">
+                                    <input type="text" class="form-control" name="txtAdres" id="txtAdres" placeholder="Firma Adres">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="control-label col-md-3 col-sm-3 ">Firma Kategorisi<span class="required">*</span></label>
+                                <div class="col-md-9 col-sm-9 ">
+                                    <input type="text" class="form-control" name="txtfirmaCat" id="txtfirmaCat" placeholder="Firma Kategorisi ( Örneğin Oto Tamircisi)">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="control-label col-md-3 col-sm-3 ">İl Seçiniz<span class="required">*</span></label>
+                                <div class="col-md-9 col-sm-9 ">
+                                    <select id="selectpicker" class="form-control select2 oneacordion" name="selectpicker">
+                                        <option disabled selected value="0">İl Seçiniz</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="control-label col-md-3 col-sm-3 ">İlçe Seçiniz<span class="required">*</span></label>
+                                <div class="col-md-9 col-sm-9 ">
+                                    <select id="ilceler" class="form-control select2 twoacordion" name="ilceler">
+                                        <option disabled selected value="0">İlçe Seçiniz</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row ">
+                                <label class="control-label col-md-3 col-sm-3 ">Servis Açıklaması<span class="required">*</span></label>
+                                <div class="col-md-9 col-sm-9 ">
+                                    <input type="text" class="form-control" name="txtServiceDesc" id="txtServiceDesc" placeholder="Servis Açıklaması">
+                                </div>
+                            </div>
+                            <div class="form-group row ">
+                                <label class="control-label col-md-3 col-sm-3 ">Fax Numarası<span class="required">*</span></label>
+                                <div class="col-md-9 col-sm-9 ">
+                                    <input type="text" name="txtfaxNo" id="txtfaxNo" class="form-control" placeholder="Fax Numarası">
+                                </div>
+                            </div>
+                            <div class="form-group row ">
+                                <label class="control-label col-md-3 col-sm-3 ">Sabit Telefon<span class="required">*</span></label>
+                                <div class="col-md-9 col-sm-9 ">
+                                    <input type="text" name="txtSabitTelefon" id="txtSabitTelefon" class="form-control" placeholder="Sabit Telefon">
+                                </div>
+                            </div>
+                            <div class="form-group row ">
+                                <label class="control-label col-md-3 col-sm-3 ">Cep Telefonu<span class="required">*</span></label>
+                                <div class="col-md-9 col-sm-9 ">
+                                    <input type="text" name="txtCeptelefon" id="txtCeptelefon" class="form-control" placeholder="Cep Telefonu">
+                                </div>
+                            </div>
+                            <div class="ln_solid"></div>
+                            <div class="form-group">
+                                <div class="col-md-9 col-sm-9  offset-md-3">
+                                    <button type="reset" class="btn btn-primary">Temizle</button>
+                                    <button type="button" id="btnKaydet" class="btn btn-success">Kaydet</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function sedeceSayi(evt) {
+        evt = (evt) ? evt : window.event
+        var charCode = (evt.which) ? evt.which : evt.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false
+        }
+        return true
+    }
+    $(document).ready(function () {
+        $('#txtCeptelefon').usPhoneFormat({
+            format: '(xxx) xxx-xxxx',
+        });
+        $('#txtSabitTelefon').usPhoneFormat({
+            format: '(xxx) xxx-xxxx',
+        });
+        $('#txtfaxNo').usPhoneFormat({
+            format: '(xxx) xxx-xxxx',
+        });
+        $.ajax({
+            url: '@Url.Action("GetCityFront", "UserOperation")',
+            type: "GET",
+            success: function (data) {
+                $.each(data, function (index, item) {
+                    $('.oneacordion').append('<option value="' + item.ID + '">' + item.CityDistrictDistrictName + '</option>')
+                });
+            }
+        });
+    });
+    $(function () {
+        $('#selectpicker').change(function () {
+            debugger;
+            $('.twoacordion').empty();
+            $('.twoacordion').append('<option disabled selected value="0">İlçe Seçiniz</option>');
+            var parentId = $('#selectpicker').val();
+            $.ajax({
+                url: '@Url.Action("GetCountyFront", "UserOperation")',
+                type: "GET",
+                data: { parentId: parentId },
+                success: function (data) {
+                    $.each(data, function (index, item) {
+                        $('.twoacordion').append('<option value="' + item.ID + '">' + item.cityDistrictDistrictName + '</option>');
+                    });
+                }
+            });
+        });       
+        $("#btnKaydet").click(function (e) {            
+            e.preventDefault();
+            var firmaadi = $("#txtfirmaAdi").val();
+            var firmaadres = $("#txtAdres").val();
+            var firmacategory = $("#txtfirmaCat").val();
+            var ili = $('#selectpicker option:selected').text();
+            var ilcesi = $('#ilceler option:selected').text();
+            var servisdesrc = $("#txtServiceDesc").val();
+            var faxno = $("#txtfaxNo").val();
+            var sabittel = $("#txtSabitTelefon").val();
+            var ceptelefon = $("#txtCeptelefon").val();
+
+            if (firmaadi == "" || firmaadi == null) {
+                $('<div title="Uyarı"></div>').dialog({
+                    open: function (event, ui) {
+                        $(this).html("Firma Adı Alanı Boş Geçilemez");
+                    },
+                    close: function () {
+                        $(this).remove();
+                    },
+                    resizable: true,
+                    modal: true,
+                    buttons: {
+                        'Tamam': function () {
+                            $(this).dialog('close');
+                        }
+                    }
+                });
+            }
+            else if (firmaadres == "" || firmaadres == null) {
+                $('<div title="Uyarı"></div>').dialog({
+                    open: function (event, ui) {
+                        $(this).html("Firma Adresi Alanı Boş Geçilemez");
+                    },
+                    close: function () {
+                        $(this).remove();
+                    },
+                    resizable: true,
+                    modal: true,
+                    buttons: {
+                        'Tamam': function () {
+                            $(this).dialog('close');
+                        }
+                    }
+                });
+            }
+            else if (firmacategory == "" || firmacategory == null) {
+                $('<div title="Uyarı"></div>').dialog({
+                    open: function (event, ui) {
+                        $(this).html("Firma Kategorisi Alanı Boş Geçilemez");
+                    },
+                    close: function () {
+                        $(this).remove();
+                    },
+                    resizable: true,
+                    modal: true,
+                    buttons: {
+                        'Tamam': function () {
+                            $(this).dialog('close');
+                        }
+                    }
+                });
+            }            
+            else if (ili == "İl Seçiniz") {
+                $('<div title="Uyarı"></div>').dialog({
+                    open: function (event, ui) {
+                        $(this).html("İli Seçmediniz");
+                    },
+                    close: function () {
+                        $(this).remove();
+                    },
+                    resizable: true,
+                    modal: true,
+                    buttons: {
+                        'Tamam': function () {
+                            $(this).dialog('close');
+                        }
+                    }
+                });
+
+            }
+            else if (ilcesi == "İlçe Seçiniz") {
+                $('<div title="Uyarı"></div>').dialog({
+                    open: function (event, ui) {
+                        $(this).html("İlçe Seçmediniz");
+                    },
+                    close: function () {
+                        $(this).remove();
+                    },
+                    resizable: true,
+                    modal: true,
+                    buttons: {
+                        'Tamam': function () {
+                            $(this).dialog('close');
+                        }
+                    }
+                });
+
+            }
+            else if (servisdesrc == "" || servisdesrc == null) {
+                $('<div title="Uyarı"></div>').dialog({
+                    open: function (event, ui) {
+                        $(this).html("Servis Açıklama Alanı Boş Geçilemez");
+                    },
+                    close: function () {
+                        $(this).remove();
+                    },
+                    resizable: true,
+                    modal: true,
+                    buttons: {
+                        'Tamam': function () {
+                            $(this).dialog('close');
+                        }
+                    }
+                });
+
+            }
+            else if (faxno == "" || faxno == null) {
+                $('<div title="Uyarı"></div>').dialog({
+                    open: function (event, ui) {
+                        $(this).html("Fax No Alanı Boş Geçilemez");
+                    },
+                    close: function () {
+                        $(this).remove();
+                    },
+                    resizable: true,
+                    modal: true,
+                    buttons: {
+                        'Tamam': function () {
+                            $(this).dialog('close');
+                        }
+                    }
+                });
+            }
+            else if (sabittel == "" || sabittel == null) {
+                $('<div title="Uyarı"></div>').dialog({
+                    open: function (event, ui) {
+                        $(this).html("Sabit Telefon Alanı Boş Geçilemez");
+                    },
+                    close: function () {
+                        $(this).remove();
+                    },
+                    resizable: true,
+                    modal: true,
+                    buttons: {
+                        'Tamam': function () {
+                            $(this).dialog('close');
+                        }
+                    }
+                });
+            }
+            else if (ceptelefon == "" || ceptelefon == null) {
+                $('<div title="Uyarı"></div>').dialog({
+                    open: function (event, ui) {
+                        $(this).html("Cep Telefonu Alanı Boş Geçilemez");
+                    },
+                    close: function () {
+                        $(this).remove();
+                    },
+                    resizable: true,
+                    modal: true,
+                    buttons: {
+                        'Tamam': function () {
+                            $(this).dialog('close');
+                        }
+                    }
+                });
+            }
+            else {
+                debugger;
+                var myData = {
+                    CompanyName: firmaadi,
+                    CompanyAdress: firmaadres,
+                    CompanyCategories: firmacategory,
+                    CompanyCity: ili,
+                    CompanyCounty: ilcesi,
+                    ServiceDescription: servisdesrc,
+                    FaxNumber: faxno,
+                    LandPhone: sabittel,
+                    CellPhone: ceptelefon
+                };
+                $.ajax({
+                    type: "GET",
+                    url: "/UserOperation/CompanySaveControl",
+                    data: myData,
+                    success: function (data) {
+                        if (data == "1") {
+                            $('<div title="Uyarı"></div>').dialog({
+                                open: function (event, ui) {
+                                    $(this).html("Kaydetme İşlemi Başarılı Bir Şekilde Yapıldı.");
+                                },
+                                close: function () {
+                                    $(this).remove();
+                                },
+                                resizable: true,
+                                modal: true,
+                                buttons: {
+                                    'Tamam': function () {
+                                        $(this).dialog('close');
+                                        window.location.reload(false);
+                                    }
+                                }
+                            });
+                        } else if (data == "2") {
+                            $('<div title="Uyarı"></div>').dialog({
+                                open: function (event, ui) {
+                                    $(this).html("Kullanıcı Daha Önce Kayıt Edilmiş.");
+                                },
+                                close: function () {
+                                    $(this).remove();
+                                },
+                                resizable: true,
+                                modal: true,
+                                buttons: {
+                                    'Tamam': function () {
+                                        $(this).dialog('close');
+                                        window.location.reload(false);
+                                    }
+                                }
+                            });
+
+                        }
+                        else {
+                            $('<div title="Uyarı"></div>').dialog({
+                                open: function (event, ui) {
+                                    $(this).html("Kaydetme İşlemi Başarısız.");
+                                },
+                                close: function () {
+                                    $(this).remove();
+                                },
+                                resizable: true,
+                                modal: true,
+                                buttons: {
+                                    'Tamam': function () {
+                                        $(this).dialog('close');
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        });
+    });
+</script>
+<!-- /page content -->
